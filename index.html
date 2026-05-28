@@ -36,16 +36,17 @@
 
         .floating-heart {
             position: absolute;
-            font-size: 20px;
-            opacity: 0.3;
-            animation: floatHeart 15s infinite ease-in-out;
+            font-size: 25px;
+            opacity: 0.4;
+            animation: floatHeart 12s infinite ease-in-out;
         }
 
         @keyframes floatHeart {
-            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.3; }
-            90% { opacity: 0.3; }
-            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+            0%, 100% { transform: translateY(100vh) rotate(0deg) scale(1); opacity: 0; }
+            10% { opacity: 0.4; }
+            50% { transform: translateY(50vh) rotate(180deg) scale(1.2); }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(-100px) rotate(360deg) scale(1); opacity: 0; }
         }
 
         /* 导航栏 */
@@ -1101,15 +1102,18 @@
         // 浮动爱心
         function createFloatingHearts() {
             const container = document.getElementById('floatingElements');
-            const hearts = ['💙', '💎', '😘', '✨', '🩵', '💧'];
+            // 活泼的爱心emoji组合
+            const hearts = ['💙', '💕', '💗', '💖', '🩵', '💎', '💧', '✨', '🌸', '😘', '🤟', '💫', '⭐'];
 
-            for (let i = 0; i < 15; i++) {
+            for (let i = 0; i < 30; i++) {
                 const heart = document.createElement('div');
                 heart.className = 'floating-heart';
                 heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
                 heart.style.left = Math.random() * 100 + '%';
                 heart.style.animationDelay = Math.random() * 15 + 's';
-                heart.style.animationDuration = (15 + Math.random() * 10) + 's';
+                heart.style.animationDuration = (12 + Math.random() * 8) + 's';
+                heart.style.fontSize = (15 + Math.random() * 20) + 'px';
+                heart.style.opacity = 0.2 + Math.random() * 0.3;
                 container.appendChild(heart);
             }
         }
