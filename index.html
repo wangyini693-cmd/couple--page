@@ -466,7 +466,168 @@
             font-size: 1.1em;
         }
 
-        /* 照片预览弹窗 */
+        /* 旅行地图 */
+        .map-section {
+            background: linear-gradient(180deg, white 0%, rgba(74, 144, 226, 0.03) 100%);
+            min-height: auto;
+            padding: 100px 20px;
+        }
+
+        .map-container {
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .china-map {
+            background: white;
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(74, 144, 226, 0.15);
+        }
+
+        .map-svg {
+            width: 400px;
+            height: 350px;
+        }
+
+        .map-bg {
+            fill: #e8f4fd;
+            stroke: #4a90e2;
+            stroke-width: 2;
+        }
+
+        .visited-marker {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .visited-marker circle {
+            transition: all 0.3s ease;
+        }
+
+        .visited-marker:hover circle {
+            r: 25;
+            filter: drop-shadow(0 0 10px rgba(74, 144, 226, 0.5));
+        }
+
+        .visited-list {
+            background: white;
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(74, 144, 226, 0.15);
+            text-align: center;
+            min-width: 300px;
+        }
+
+        .visited-list h3 {
+            color: #4a90e2;
+            margin-bottom: 20px;
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+
+        .city-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .city-tag {
+            background: linear-gradient(135deg, #e8f4fd, #d4e8f5);
+            color: #4a90e2;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .city-tag:hover {
+            background: #4a90e2;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .map-hint {
+            color: #8cb8dc;
+            font-size: 0.9em;
+            margin-top: 20px;
+        }
+
+        .map-lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .map-lightbox.active {
+            display: flex;
+        }
+
+        .map-lightbox-content {
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .map-lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+        }
+
+        #mapCityTitle {
+            color: #4a90e2;
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+
+        .map-photos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .map-photo {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .map-photo img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .no-photos {
+            text-align: center;
+            color: #8cb8dc;
+            padding: 40px;
+            font-size: 1.1em;
+        }
         .lightbox {
             display: none;
             position: fixed;
@@ -564,6 +725,7 @@
     <nav>
         <a href="#countdown">纪念日</a>
         <a href="#gallery">故事相册</a>
+        <a href="#map">旅行地图</a>
         <a href="#game">默契游戏</a>
         <a href="#notes">甜蜜留言</a>
     </nav>
@@ -665,6 +827,65 @@
 
                 <div class="photo-gallery" id="photoGallery">
                     <!-- 照片会通过JS添加 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 旅行地图 -->
+        <section class="map-section" id="map">
+            <h2 class="section-title">我们去过的地方</h2>
+            <div class="map-container">
+                <div class="china-map" id="chinaMap">
+                    <svg viewBox="0 0 600 500" class="map-svg">
+                        <!-- 简化中国地图轮廓 -->
+                        <path class="map-bg" d="M150,80 L200,60 L280,50 L350,60 L400,80 L450,100 L480,150 L500,200 L520,280 L500,350 L450,400 L380,450 L300,470 L220,450 L150,400 L100,320 L80,240 L100,160 Z"/>
+                        
+                        <!-- 标记已去过的省份 -->
+                        <g class="visited-marker" data-province="云南" data-cities="大理,香格里拉" onclick="showProvincePhotos(this)">
+                            <circle cx="280" cy="320" r="20" fill="#4a90e2"/>
+                            <text x="280" y="325" text-anchor="middle" fill="white" font-size="12">云南</text>
+                        </g>
+                        <g class="visited-marker" data-province="广东" data-cities="中山,汕头,东澳岛" onclick="showProvincePhotos(this)">
+                            <circle cx="340" cy="400" r="20" fill="#4a90e2"/>
+                            <text x="340" y="405" text-anchor="middle" fill="white" font-size="12">广东</text>
+                        </g>
+                        <g class="visited-marker" data-province="香港" data-cities="香港" onclick="showProvincePhotos(this)">
+                            <circle cx="380" cy="380" r="15" fill="#4a90e2"/>
+                            <text x="380" y="383" text-anchor="middle" fill="white" font-size="10">港</text>
+                        </g>
+                        <g class="visited-marker" data-province="贵州" data-cities="贵阳" onclick="showProvincePhotos(this)">
+                            <circle cx="260" cy="350" r="18" fill="#4a90e2"/>
+                            <text x="260" y="353" text-anchor="middle" fill="white" font-size="11">贵州</text>
+                        </g>
+                        <g class="visited-marker" data-province="安徽" data-cities="合肥" onclick="showProvincePhotos(this)">
+                            <circle cx="420" cy="220" r="18" fill="#4a90e2"/>
+                            <text x="420" y="223" text-anchor="middle" fill="white" font-size="11">安徽</text>
+                        </g>
+                    </svg>
+                </div>
+                <div class="visited-list">
+                    <h3>📍 已打卡城市</h3>
+                    <div class="city-tags">
+                        <span class="city-tag" onclick="showProvincePhotosByCity('大理')">🌸 大理</span>
+                        <span class="city-tag" onclick="showProvincePhotosByCity('香格里拉')">🏔️ 香格里拉</span>
+                        <span class="city-tag" onclick="showProvincePhotosByCity('中山')">🏙️ 中山</span>
+                        <span class="city-tag" onclick="showProvincePhotosByCity('香港')">🌃 香港</span>
+                        <span class="city-tag" onclick="showProvincePhotosByCity('贵阳')">🌲 贵阳</span>
+                        <span class="city-tag" onclick="showProvincePhotosByCity('合肥')">🏛️ 合肥</span>
+                        <span class="city-tag" onclick="showProvincePhotosByCity('汕头')">🌊 汕头</span>
+                        <span class="city-tag" onclick="showProvincePhotosByCity('东澳岛')">⛵ 东澳岛</span>
+                    </div>
+                    <p class="map-hint">点击地图标记或城市名称查看照片</p>
+                </div>
+            </div>
+            <!-- 照片弹窗 -->
+            <div class="map-lightbox" id="mapLightbox" onclick="closeMapLightbox()">
+                <div class="map-lightbox-content" onclick="event.stopPropagation()">
+                    <span class="map-lightbox-close" onclick="closeMapLightbox()">&times;</span>
+                    <h3 id="mapCityTitle">📍 城市名</h3>
+                    <div class="map-photos" id="mapPhotos">
+                        <p class="no-photos">暂无照片，敬请期待~ 📷</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -994,6 +1215,48 @@
 
         function restartGame() {
             startGame();
+        }
+
+        // 旅行地图功能
+        const cityPhotos = {
+            '大理': [],
+            '香格里拉': [],
+            '中山': [],
+            '香港': [],
+            '贵阳': [],
+            '合肥': [],
+            '汕头': [],
+            '东澳岛': []
+        };
+
+        function showProvincePhotos(element) {
+            const province = element.getAttribute('data-province');
+            const cities = element.getAttribute('data-cities').split(',');
+            showMapLightbox(cities[0]);
+        }
+
+        function showProvincePhotosByCity(city) {
+            showMapLightbox(city);
+        }
+
+        function showMapLightbox(city) {
+            document.getElementById('mapCityTitle').textContent = '📍 ' + city;
+            const photosContainer = document.getElementById('mapPhotos');
+            
+            const photos = cityPhotos[city] || [];
+            if (photos.length === 0) {
+                photosContainer.innerHTML = '<p class="no-photos">暂无' + city + '的照片，敬请期待~ 📷</p>';
+            } else {
+                photosContainer.innerHTML = photos.map(src => 
+                    '<div class="map-photo"><img src="' + src + '" alt="' + city + '"></div>'
+                ).join('');
+            }
+            
+            document.getElementById('mapLightbox').classList.add('active');
+        }
+
+        function closeMapLightbox() {
+            document.getElementById('mapLightbox').classList.remove('active');
         }
 
         // 甜蜜留言
