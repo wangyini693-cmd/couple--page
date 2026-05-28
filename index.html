@@ -773,6 +773,11 @@
             setTimeout(() => {
                 if (index === questions[currentQuestion].correct) {
                     score++;
+                    // 第一题答对显示满屏爱心特效
+                    if (currentQuestion === 0) {
+                        showPerfectHearts();
+                        return;
+                    }
                 }
                 currentQuestion++;
 
@@ -782,6 +787,53 @@
                     showResult();
                 }
             }, 500);
+        }
+
+        // 满屏爱心特效
+        function showPerfectHearts() {
+            const overlay = document.createElement('div');
+            overlay.id = 'perfectOverlay';
+            overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,0.9);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;';
+            
+            for (let i = 0; i < 50; i++) {
+                const heart = document.createElement('div');
+                heart.textContent = ['💙', '💕', '💗', '💖', '🩵', '💎'][Math.floor(Math.random() * 6)];
+                heart.style.cssText = `position:absolute;font-size:${20 + Math.random() * 30}px;animation:fallHeart ${2 + Math.random() * 2}s linear forwards;left:${Math.random() * 100}%;top:-50px;`;
+                overlay.appendChild(heart);
+            }
+
+            const centerHeart = document.createElement('div');
+            centerHeart.style.cssText = 'font-size:80px;animation:bigHeart 1s ease-in-out;';
+            centerHeart.textContent = '💙';
+            overlay.appendChild(centerHeart);
+
+            const text = document.createElement('div');
+            text.textContent = '🎉 默契度100分 🎉';
+            text.style.cssText = 'font-size:2.5em;color:#4a90e2;margin-top:20px;font-weight:bold;font-family:"Ma Shan Zheng";animation:fadeInUp 1s ease;';
+            overlay.appendChild(text);
+
+            // 添加动画样式
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fallHeart {
+                    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+                    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+                }
+                @keyframes bigHeart {
+                    0%,100% { transform: scale(1); }
+                    50% { transform: scale(1.5); }
+                }
+            `;
+            overlay.appendChild(style);
+
+            document.body.appendChild(overlay);
+
+            // 3秒后移除并继续游戏
+            setTimeout(() => {
+                overlay.remove();
+                currentQuestion++;
+                showQuestion();
+            }, 3000);
         }
 
         function startGame() {
