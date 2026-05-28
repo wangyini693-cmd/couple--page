@@ -628,6 +628,126 @@
             padding: 40px;
             font-size: 1.1em;
         }
+
+        /* 100件小事清单 */
+        .bucket-list-section {
+            background: linear-gradient(180deg, rgba(74, 144, 226, 0.03) 0%, #f0f7ff 100%);
+            padding: 100px 20px;
+        }
+
+        .bucket-list-container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(74, 144, 226, 0.15);
+        }
+
+        .bucket-progress {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .progress-text {
+            font-size: 1.3em;
+            color: #4a90e2;
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+
+        .progress-bar {
+            width: 80%;
+            height: 20px;
+            background: #e8f4fd;
+            border-radius: 10px;
+            margin: 15px auto 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4a90e2, #7eb8ff);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .bucket-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .bucket-item {
+            background: linear-gradient(135deg, #f8fcff, #eef6fc);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bucket-item:hover {
+            border-color: #4a90e2;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.2);
+        }
+
+        .bucket-item.completed {
+            background: linear-gradient(135deg, #e8f4fd, #d4e8f5);
+            border-color: #4a90e2;
+        }
+
+        .bucket-item.completed .bucket-checkbox {
+            background: #4a90e2;
+            border-color: #4a90e2;
+        }
+
+        .bucket-item.completed .bucket-checkbox::after {
+            content: '✓';
+            color: white;
+        }
+
+        .bucket-item.completed .bucket-text {
+            text-decoration: line-through;
+            color: #8cb8dc;
+        }
+
+        .bucket-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #4a90e2;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bucket-text {
+            color: #4a90e2;
+            font-size: 0.95em;
+            flex: 1;
+        }
+
+        .bucket-date {
+            font-size: 0.75em;
+            color: #8cb8dc;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .bucket-item.completed .bucket-date {
+            display: block;
+        }
+
+        @keyframes heartFloat {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-50px) scale(1.5); opacity: 0; }
+        }
         .lightbox {
             display: none;
             position: fixed;
@@ -727,6 +847,7 @@
         <a href="#gallery">故事相册</a>
         <a href="#map">旅行地图</a>
         <a href="#game">默契游戏</a>
+        <a href="#bucketlist">100件小事</a>
         <a href="#notes">甜蜜留言</a>
     </nav>
 
@@ -906,6 +1027,22 @@
                             <button class="game-btn" onclick="restartGame()">再玩一次</button>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 100件小事清单 -->
+        <section class="bucket-list-section" id="bucketlist">
+            <h2 class="section-title">一起做的100件小事</h2>
+            <div class="bucket-list-container">
+                <div class="bucket-progress">
+                    <span class="progress-text">已完成 <span id="completedCount">0</span> / 100</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+                <div class="bucket-list" id="bucketList">
+                    <!-- JS生成清单 -->
                 </div>
             </div>
         </section>
@@ -1259,6 +1396,104 @@
             document.getElementById('mapLightbox').classList.remove('active');
         }
 
+        // 100件小事清单
+        const bucketList = [
+            "一起看日出🌅", "一起看日落🌇", "一起看星空✨", "一起看烟花🎆",
+            "一起逛街🛍️", "一起买菜🥬", "一起做饭🍳", "一起洗碗🍽️",
+            "一起看电影🎬", "一起追剧📺", "一起听音乐🎵", "一起唱歌🎤",
+            "一起跳舞💃", "一起拍照📷", "一起旅行✈️", "一起露营⛺",
+            "一起骑自行车🚲", "一起散步🚶", "一起跑步🏃", "一起爬山⛰️",
+            "一起去海边🏖️", "一起游泳🏊", "一起打球⚽", "一起打游戏🎮",
+            "一起逛博物馆🏛️", "一起逛书店📚", "一起喝奶茶🧋", "一起吃冰淇淋🍦",
+            "一起吃火锅🍲", "一起吃烧烤🍖", "一起吃早茶🍵", "一起吃路边摊🍡",
+            "一起给对方写情书💌", "一起拍照留念📸", "一起养宠物🐱", "一起照顾植物🌱",
+            "一起做家务🧹", "一起整理房间🏠", "一起换床单🛏️", "一起给对方按摩💆",
+            "一起给对方梳头💇", "一起穿情侣装👫", "一起DIY手工艺品🎨", "一起画画🖼️",
+            "一起下棋♟️", "一起玩桌游🎲", "一起做蛋糕🎂", "一起做饼干🍪",
+            "一起做手工🧶", "一起种花🌸", "一起喂鱼🐟", "一起看星星🔭",
+            "一起抓娃娃机🎯", "一起夹娃娃🧸", "一起坐摩天轮🎡", "一起坐过山车🎢",
+            "一起坐海盗船🏴‍☠️", "一起坐旋转木马🎠", "一起溜冰⛸️", "一起滑雪🎿",
+            "一起泡温泉♨️", "一起蒸桑拿🧖", "一起按摩💆‍♀️", "一起做SPA🛁",
+            "一起给对方洗脚🦶", "一起刷牙🪥", "一起敷面膜🧴", "一起化妆💄",
+            "一起剪头发💇‍♀️", "一起染头发🎨", "一起美甲💅", "一起穿汉服👘",
+            "一起穿和服👘", "一起穿婚纱👰", "一起穿西装🤵", "一起做发型💇‍♂️",
+            "一起许愿🎋", "一起放孔明灯🏮", "一起放风筝🪁", "一起吹泡泡🫧",
+            "一起看萤火虫✨", "一起捡贝壳🐚", "一起堆沙堡🏰", "一起划船🚣",
+            "一起钓鱼🎣", "一起喂鸽子🕊️", "一起看蝴蝶🦋", "一起看日出云海☁️",
+            "一起看极光🌌", "一起看流星雨🌠", "一起看彩虹🌈", "一起看夕阳🌤️",
+            "一起看月亮🌙", "一起给对方送惊喜🎁", "一起过生日🎂", "一起过纪念日💕",
+            "一起过情人节💝", "一起过圣诞节🎄", "一起过新年🧧", "一起过中秋🥮",
+            "一起过端午节🐉", "一起过七夕💑", "一起拍照记录美好瞬间📱"
+        ];
+
+        let completedItems = [];
+
+        function initBucketList() {
+            const container = document.getElementById('bucketList');
+            // 随机打乱顺序
+            const shuffledList = [...bucketList].sort(() => Math.random() - 0.5);
+            
+            shuffledList.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'bucket-item';
+                div.setAttribute('data-index', index);
+                div.innerHTML = `
+                    <div class="bucket-checkbox"></div>
+                    <div class="bucket-content">
+                        <div class="bucket-text">${item}</div>
+                        <div class="bucket-date"></div>
+                    </div>
+                `;
+                div.onclick = () => toggleBucketItem(div, index);
+                container.appendChild(div);
+            });
+            
+            updateBucketProgress();
+        }
+
+        function toggleBucketItem(element, index) {
+            element.classList.toggle('completed');
+            
+            const dateDiv = element.querySelector('.bucket-date');
+            if (element.classList.contains('completed')) {
+                // 添加完成日期
+                const now = new Date();
+                dateDiv.textContent = `✓ 完成于 ${now.getFullYear()}.${now.getMonth() + 1}.${now.getDate()}`;
+                
+                // 爱心特效
+                showHeartEffect(element);
+            } else {
+                dateDiv.textContent = '';
+            }
+            
+            updateBucketProgress();
+        }
+
+        function showHeartEffect(element) {
+            const rect = element.getBoundingClientRect();
+            for (let i = 0; i < 5; i++) {
+                const heart = document.createElement('div');
+                heart.textContent = ['💙', '💕', '💗', '🩵'][Math.floor(Math.random() * 4)];
+                heart.style.cssText = `
+                    position:fixed;
+                    font-size:20px;
+                    left:${rect.left + rect.width / 2}px;
+                    top:${rect.top}px;
+                    pointer-events:none;
+                    z-index:9999;
+                    animation:heartFloat 1s ease-out forwards;
+                `;
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 1000);
+            }
+        }
+
+        function updateBucketProgress() {
+            const completed = document.querySelectorAll('.bucket-item.completed').length;
+            document.getElementById('completedCount').textContent = completed;
+            document.getElementById('progressFill').style.width = (completed / 100 * 100) + '%';
+        }
+
         // 甜蜜留言
         function initSweetNotes() {
             const notes = [
@@ -1283,6 +1518,7 @@
             createFloatingHearts();
             initGallery();
             initSweetNotes();
+            initBucketList();
         });
     </script>
 </body>
