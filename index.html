@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小苗总 & Chloe 💕</title>
+    <title>小苗总💙Chloe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,7 +15,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', 'PingFang SC', sans-serif;
+            font-family: 'ZCOOL XiaoWei', 'Ma Shan Zheng', serif;
             background: linear-gradient(135deg, #e8f4fd 0%, #f0f7ff 50%, #e3f0fb 100%);
             min-height: 100vh;
             color: #333;
@@ -100,27 +103,26 @@
         }
 
         .hero h1 {
-            font-size: 3.5em;
+            font-size: 4em;
+            font-weight: bold;
             color: #4a90e2;
             margin-bottom: 20px;
             animation: fadeInUp 1s ease;
+            font-family: 'Ma Shan Zheng', cursive;
+            letter-spacing: 3px;
         }
 
         .hero .names {
-            font-size: 1.8em;
-            color: #6ba3d6;
+            font-size: 2.2em;
+            color: #4a90e2;
             margin-bottom: 30px;
             animation: fadeInUp 1s ease 0.2s both;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-weight: bold;
         }
 
         .hero .heart {
-            font-size: 50px;
-            animation: heartbeat 1.5s infinite;
-        }
-
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            display: none;
         }
 
         @keyframes fadeInUp {
@@ -568,8 +570,7 @@
         <!-- 首屏 -->
         <section class="hero">
             <h1>Our Love Story</h1>
-            <p class="names">小苗总 & Chloe</p>
-            <div class="heart">💕</div>
+            <p class="names">小苗总💙Chloe</p>
         </section>
 
         <!-- 倒计时区 -->
@@ -705,7 +706,7 @@
         // 浮动爱心
         function createFloatingHearts() {
             const container = document.getElementById('floatingElements');
-            const hearts = ['💕', '💗', '💖', '✨', '🌸', '💝'];
+            const hearts = ['💙', '💎', '😘', '✨', '🩵', '💧'];
 
             for (let i = 0; i < 15; i++) {
                 const heart = document.createElement('div');
