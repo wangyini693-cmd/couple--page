@@ -455,13 +455,15 @@
         }
 
         .sweet-note {
-            background: linear-gradient(135deg, #fff5f6, #ffeef0);
+            background: linear-gradient(135deg, #e8f4fd, #d4e8f5);
             padding: 20px;
             border-radius: 15px;
             text-align: center;
-            font-size: 0.95em;
-            color: #e88a94;
+            font-size: 1em;
+            color: #4a90e2;
             animation: fadeInUp 0.5s ease both;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.1em;
         }
 
         /* 照片预览弹窗 */
@@ -579,7 +581,7 @@
             <div class="countdown-container">
                 <div class="countdown-days" id="daysCount">0<span> 天</span></div>
                 <div class="countdown-label">在一起的每一天</div>
-                <div class="since-date">从 2026年3月18日 开始 💝</div>
+                <div class="since-date">从 2026年3月8日 开始 💙</div>
 
                 <div class="milestones">
                     <div class="milestone">
@@ -674,7 +676,7 @@
     <script>
         // 纪念日计算
         function updateCountdown() {
-            const startDate = new Date('2026-03-18');
+            const startDate = new Date('2026-03-08');
             const today = new Date();
             const diffTime = today - startDate;
             const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
@@ -722,14 +724,13 @@
         // 相册照片
         function initGallery() {
             const gallery = document.getElementById('photoGallery');
-            for (let i = 4; i <= 12; i++) {
+            const cities = ['大理', '香格里拉', '中山', '香港', '贵阳', '合肥', '汕头', '未完待续'];
+            for (let i = 4; i <= 11; i++) {
+                const cityIndex = i - 4;
                 const photoItem = document.createElement('div');
                 photoItem.className = 'photo-item';
-                photoItem.innerHTML = `
-                    <img src="https://picsum.photos/400/400?random=${i}" alt="照片${i}">
-                    <div class="photo-overlay">📷 点击查看大图</div>
-                `;
-                photoItem.onclick = () => openLightbox(`https://picsum.photos/800/800?random=${i}`);
+                photoItem.innerHTML = '<img src="https://picsum.photos/400/400?random=' + i + '" alt="' + cities[cityIndex] + '"><div class="photo-overlay">📍' + cities[cityIndex] + '</div>';
+                photoItem.onclick = () => openLightbox('https://picsum.photos/800/800?random=' + i);
                 gallery.appendChild(photoItem);
             }
         }
@@ -826,14 +827,10 @@
         // 甜蜜留言
         function initSweetNotes() {
             const notes = [
-                "遇见你是我最大的幸运 💕",
-                "每天醒来第一件事就是想你 💭",
-                "想和你一起慢慢变老 👴👵",
-                "你是我心中最美的风景 🌈",
-                "愿此刻永恒 ❤️",
-                "爱你不需要理由 💗",
-                "只想和你虚度时光 🌸",
-                "你是我的专属甜蜜 🍯"
+                "爱你爱你爱你 💙",
+                "最喜欢的事情就是饭后手牵手一起散步 🚶‍♀️🚶",
+                "要一起去好多好多好多地方 ✈️",
+                "永远做你坚强的后盾 💪"
             ];
 
             const container = document.getElementById('sweetNotes');
