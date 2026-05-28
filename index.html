@@ -639,9 +639,9 @@
             <h2 class="section-title">默契大考验</h2>
             <div class="game-container">
                 <div class="game-card" id="gameCard">
-                    <div class="game-question" id="gameQuestion">准备好了吗？来测试一下我们的默契程度吧~</div>
+                    <div class="game-question" id="gameQuestion">默契大考验 💕<br><span style="font-size:0.8em;color:#8cb8dc;">（小苗总先答，答完传给Chloe）</span></div>
                     <div class="game-options" id="gameOptions">
-                        <div class="game-option" onclick="selectAnswer(0)">开始测试 💕</div>
+                        <div class="game-option" onclick="selectAnswer(0)">开始测试 💙</div>
                     </div>
                     <div class="game-result" id="gameResult" style="display:none;">
                         <div class="game-score" id="gameScore">0%</div>
@@ -745,26 +745,94 @@
             document.getElementById('lightbox').classList.remove('active');
         }
 
-        // 默契问答游戏
+// 默契问答游戏 - 双人模式
         const questions = [
             { q: "对方最爱的颜色是什么？", options: ["蓝色 💙", "粉色 💗", "紫色 💜", "绿色 💚"], correct: 0 },
+            { q: "我们第一次牵手在哪里？", options: ["平安大厦 🌆", "深圳湾万象 🌊", "前海石公园 🏞️", "欢乐海岸 🎡"], correct: 0 },
             { q: "谁更喜欢睡懒觉？", options: ["小苗总 😴", "Chloe 🌞", "都很爱睡 😴😴", "都不爱睡"], correct: 0 },
-            { q: "第一次约会的地点是？", options: ["咖啡馆 ☕", "公园 🌳", "餐厅 🍽️", "电影院 🎬"], correct: 2 },
             { q: "谁先告白的？", options: ["小苗总 💕", "Chloe 💕", "同时说出来 ❤️", "不告诉你 🤫"], correct: 0 },
-            { q: "最喜欢的约会方式是？", options: ["一起看电影 🎬", "一起吃饭 🍽️", "一起散步 🚶", "待在一起做什么都好 💑"], correct: 3 },
+            { q: "最喜欢的约会方式是？", options: ["一起看电影 🎬", "一起吃饭 🍽️", "一起散步 🚶", "做什么都好 💑"], correct: 3 },
             { q: "吵架后谁先道歉？", options: ["小苗总 🙋", "Chloe 🙋", "看情况 🤔", "从来不吵 😤"], correct: 2 },
             { q: "最爱吃的食物是什么？", options: ["火锅 🍲", "烧烤 🍖", "甜品 🍰", "只要一起吃都爱 🍴"], correct: 3 },
-            { q: "两个人的昵称是？", options: ["宝贝 💕", "猪猪 🐷", "亲爱的 💖", "以上都是 💕"], correct: 3 }
+            { q: "睡前最喜欢做什么？", options: ["聊天 💬", "看剧 📺", "各玩手机 📱", "抱着睡觉 😴"], correct: 3 },
+            { q: "对方最可爱的地方是哪里？", options: ["笑容 😊", "眼睛 👀", "抱抱时 🤗", "所有地方 💕"], correct: 3 }
         ];
 
         let currentQuestion = 0;
-        let score = 0;
+        let player1Score = 0;
+        let player2Score = 0;
+        let player1Answers = [];
+        let player2Answers = [];
+        let currentPlayer = 1;
 
         function selectAnswer(index) {
             if (currentQuestion === 0 && index === 0) {
                 startGame();
                 return;
             }
+
+            const options = document.querySelectorAll('.game-option');
+            options.forEach(o => o.classList.remove('selected'));
+            options[index].classList.add('selected');
+
+            // 保存答案
+            if (currentPlayer === 1) {
+                player1Answers.push(index);
+            } else {
+                player2Answers.push(index);
+            }
+
+            setTimeout(() => {
+                if (currentPlayer === 1) {
+                    // 玩家1答完，轮到玩家2
+                    currentPlayer = 2;
+                    showPlayer2Answer();
+                } else {
+                    // 玩家2答完，比较答案
+                    const correct = player1Answers[currentQuestion] === player2Answers[currentQuestion];
+                    if (correct) {
+                        player1Score++;
+                        player2Score++;
+                        if (currentQuestion === 1) { // 第二题（第一次牵手）答对显示特效
+                            showPerfectHearts();
+                            return;
+                        }
+                    }
+                    currentQuestion++;
+                    currentPlayer = 1;
+                    
+                    if (currentQuestion < questions.length) {
+                        showPlayer1Answer();
+                    } else {
+                        showResult();
+                    }
+                }
+            }, 500);
+        }
+
+        function showPlayer2Answer() {
+            document.getElementById('gameQuestion').innerHTML = `
+                <div style="font-size:0.8em;color:#8cb8dc;">小苗总已答完 ✓</div>
+                <div style="margin-top:10px;">轮到 Chloe 回答</div>
+            `;
+            const q = questions[currentQuestion];
+            const optionsHtml = q.options.map((opt, i) =>
+                `<div class="game-option" onclick="selectAnswer(${i})">${opt}</div>`
+            ).join('');
+            document.getElementById('gameOptions').innerHTML = optionsHtml;
+        }
+
+        function showPlayer1Answer() {
+            document.getElementById('gameQuestion').innerHTML = `
+                <div style="font-size:1.2em;color:#4a90e2;">Q${currentQuestion + 1}: ${questions[currentQuestion].q}</div>
+                <div style="font-size:0.9em;color:#8cb8dc;margin-top:10px;">轮到小苗总回答</div>
+            `;
+            const q = questions[currentQuestion];
+            const optionsHtml = q.options.map((opt, i) =>
+                `<div class="game-option" onclick="selectAnswer(${i})">${opt}</div>`
+            ).join('');
+            document.getElementById('gameOptions').innerHTML = optionsHtml;
+        }
 
             const options = document.querySelectorAll('.game-option');
             options.forEach(o => o.classList.remove('selected'));
@@ -789,11 +857,11 @@
             }, 500);
         }
 
-        // 满屏爱心特效
+        // 满屏爱心特效 - 两人答案一致
         function showPerfectHearts() {
             const overlay = document.createElement('div');
             overlay.id = 'perfectOverlay';
-            overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255,255,255,0.9);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;';
+            overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(232,244,253,0.95);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;';
             
             for (let i = 0; i < 50; i++) {
                 const heart = document.createElement('div');
@@ -803,7 +871,7 @@
             }
 
             const centerHeart = document.createElement('div');
-            centerHeart.style.cssText = 'font-size:80px;animation:bigHeart 1s ease-in-out;';
+            centerHeart.style.cssText = 'font-size:100px;animation:bigHeart 1s ease-in-out;';
             centerHeart.textContent = '💙';
             overlay.appendChild(centerHeart);
 
@@ -812,7 +880,11 @@
             text.style.cssText = 'font-size:2.5em;color:#4a90e2;margin-top:20px;font-weight:bold;font-family:"Ma Shan Zheng";animation:fadeInUp 1s ease;';
             overlay.appendChild(text);
 
-            // 添加动画样式
+            const subtext = document.createElement('div');
+            subtext.textContent = '第一次牵手 - 平安大厦 💕';
+            subtext.style.cssText = 'font-size:1.2em;color:#6ba3d6;margin-top:10px;';
+            overlay.appendChild(subtext);
+
             const style = document.createElement('style');
             style.textContent = `
                 @keyframes fallHeart {
@@ -828,26 +900,33 @@
 
             document.body.appendChild(overlay);
 
-            // 3秒后移除并继续游戏
             setTimeout(() => {
                 overlay.remove();
                 currentQuestion++;
-                showQuestion();
-            }, 3000);
+                currentPlayer = 1;
+                if (currentQuestion < questions.length) {
+                    showPlayer1Answer();
+                } else {
+                    showResult();
+                }
+            }, 3500);
         }
 
         function startGame() {
             currentQuestion = 0;
-            score = 0;
-            showQuestion();
+            player1Score = 0;
+            player2Score = 0;
+            player1Answers = [];
+            player2Answers = [];
+            currentPlayer = 1;
+            showPlayer1Answer();
         }
 
-        function showQuestion() {
+        function showPlayer1Answer() {
             const q = questions[currentQuestion];
-            document.getElementById('gameQuestion').textContent = `Q${currentQuestion + 1}: ${q.q}`;
+            document.getElementById('gameQuestion').innerHTML = `<div style="font-size:1.2em;color:#4a90e2;">Q${currentQuestion + 1}: ${q.q}</div><div style="font-size:0.9em;color:#8cb8dc;margin-top:10px;">轮到小苗总回答</div>`;
             document.getElementById('gameResult').style.display = 'none';
             document.getElementById('gameOptions').style.display = 'grid';
-
             const optionsHtml = q.options.map((opt, i) =>
                 `<div class="game-option" onclick="selectAnswer(${i})">${opt}</div>`
             ).join('');
@@ -855,25 +934,31 @@
         }
 
         function showResult() {
-            const percent = Math.round((score / questions.length) * 100);
-            document.getElementById('gameQuestion').textContent = '测试完成！🎉';
+            const total = questions.length;
+            const avgPercent = Math.round(((player1Score + player2Score) / (total * 2)) * 100);
+            
+            document.getElementById('gameQuestion').innerHTML = `<div style="font-size:1.5em;color:#4a90e2;">测试完成！🎉</div>`;
             document.getElementById('gameOptions').style.display = 'none';
             document.getElementById('gameResult').style.display = 'block';
-            document.getElementById('gameScore').textContent = percent + '%';
+            
+            document.getElementById('gameScore').innerHTML = `
+                <div style="font-size:0.6em;">最终得分</div>
+                <div style="font-size:1.5em;margin-top:10px;">小苗总 ${player1Score}/${total}题</div>
+                <div style="font-size:1.5em;">Chloe ${player2Score}/${total}题</div>
+                <div style="font-size:2em;color:#4a90e2;margin-top:20px;">${avgPercent}%</div>
+            `;
 
             let message = '';
-            if (percent === 100) message = '💯 天作之合！心有灵犀一点通！';
-            else if (percent >= 80) message = '💕 超有默契！天生一对！';
-            else if (percent >= 60) message = '✨ 还不错，继续增进了解~';
+            if (avgPercent === 100) message = '💯 天作之合！心有灵犀一点通！';
+            else if (avgPercent >= 80) message = '💕 超有默契！天生一对！';
+            else if (avgPercent >= 60) message = '✨ 默契还不错，继续增进~';
             else message = '💭 默契需要时间培养，继续加油！';
 
             document.getElementById('gameMessage').textContent = message;
         }
 
         function restartGame() {
-            currentQuestion = 0;
-            score = 0;
-            showQuestion();
+            startGame();
         }
 
         // 甜蜜留言
