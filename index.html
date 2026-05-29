@@ -191,32 +191,35 @@
             margin-top: 20px;
         }
 
-        .milestones {
+        .birthdays {
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 40px;
             justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px dashed #e8f4fd;
         }
 
-        .milestone {
-            background: linear-gradient(135deg, #e8f4fd, #f0f7ff);
-            padding: 20px 30px;
-            border-radius: 20px;
+        .birthday-item {
             text-align: center;
-            min-width: 200px;
         }
 
-        .milestone-name {
-            font-size: 1em;
+        .birthday-name {
+            font-size: 1.2em;
             color: #4a90e2;
-            font-weight: 600;
+            font-weight: bold;
+            margin-bottom: 5px;
         }
 
-        .milestone-date {
-            font-size: 0.9em;
+        .birthday-date {
+            font-size: 0.95em;
             color: #8cb8dc;
-            margin-top: 5px;
+        }
+
+        .birthday-divider {
+            font-size: 1.5em;
+            color: #4a90e2;
         }
 
         /* 相册区 */
@@ -915,19 +918,16 @@
                 <div class="countdown-days" id="daysCount">0<span> 天</span></div>
                 <div class="countdown-label">在一起的每一天</div>
                 <div class="since-date">从 2026年3月8日 开始 💙</div>
-
-                <div class="milestones">
-                    <div class="milestone">
-                        <div class="milestone-name">💑 100天</div>
-                        <div class="milestone-date" id="milestone100">计算中...</div>
+                
+                <div class="birthdays">
+                    <div class="birthday-item">
+                        <div class="birthday-name">苗总 🎂</div>
+                        <div class="birthday-date">1998年2月19日</div>
                     </div>
-                    <div class="milestone">
-                        <div class="milestone-name">🎉 365天</div>
-                        <div class="milestone-date" id="milestone365">计算中...</div>
-                    </div>
-                    <div class="milestone">
-                        <div class="milestone-name">💍 一周年</div>
-                        <div class="milestone-date" id="milestoneAnniversary">计算中...</div>
+                    <div class="birthday-divider">💙</div>
+                    <div class="birthday-item">
+                        <div class="birthday-name">Chloe 🎂</div>
+                        <div class="birthday-date">1997年11月4日</div>
                     </div>
                 </div>
             </div>
