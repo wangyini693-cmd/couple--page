@@ -684,6 +684,34 @@
             transition: width 0.5s ease;
         }
 
+        .bucket-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .category-btn {
+            background: white;
+            border: 2px solid #4a90e2;
+            color: #4a90e2;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+        }
+
+        .category-btn:hover {
+            background: #e8f4fd;
+        }
+
+        .category-btn.active {
+            background: #4a90e2;
+            color: white;
+        }
+
         .bucket-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -743,6 +771,16 @@
             color: #4a90e2;
             font-size: 0.95em;
             flex: 1;
+        }
+
+        .bucket-category {
+            font-size: 0.75em;
+            color: #8cb8dc;
+            margin-top: 3px;
+        }
+
+        .bucket-item.completed .bucket-category {
+            color: #d4e8f5;
         }
 
         .bucket-date {
@@ -1125,6 +1163,14 @@
                         <div class="progress-fill" id="progressFill"></div>
                     </div>
                 </div>
+                <div class="bucket-categories">
+                    <button class="category-btn active" onclick="filterCategory('全部', this)">全部 💙</button>
+                    <button class="category-btn" onclick="filterCategory('日常陪伴', this)">日常陪伴 ☀️</button>
+                    <button class="category-btn" onclick="filterCategory('美食烟火', this)">美食烟火 🍳</button>
+                    <button class="category-btn" onclick="filterCategory('约会出行', this)">约会出行 ✈️</button>
+                    <button class="category-btn" onclick="filterCategory('趣味互动', this)">趣味互动 🎮</button>
+                    <button class="category-btn" onclick="filterCategory('仪式感', this)">仪式感 💕</button>
+                </div>
                 <div class="bucket-list" id="bucketList">
                     <!-- JS生成清单 -->
                 </div>
@@ -1483,59 +1529,155 @@
             document.getElementById('mapLightbox').classList.remove('active');
         }
 
-        // 100件小事清单
-        const bucketList = [
-            "一起看日出🌅", "一起看日落🌇", "一起看星空✨", "一起看烟花🎆",
-            "一起逛街🛍️", "一起买菜🥬", "一起做饭🍳", "一起洗碗🍽️",
-            "一起看电影🎬", "一起追剧📺", "一起听音乐🎵", "一起唱歌🎤",
-            "一起跳舞💃", "一起拍照📷", "一起旅行✈️", "一起露营⛺",
-            "一起骑自行车🚲", "一起散步🚶", "一起跑步🏃", "一起爬山⛰️",
-            "一起去海边🏖️", "一起游泳🏊", "一起打球⚽", "一起打游戏🎮",
-            "一起逛博物馆🏛️", "一起逛书店📚", "一起喝奶茶🧋", "一起吃冰淇淋🍦",
-            "一起吃火锅🍲", "一起吃烧烤🍖", "一起吃早茶🍵", "一起吃路边摊🍡",
-            "一起给对方写情书💌", "一起拍照留念📸", "一起养宠物🐱", "一起照顾植物🌱",
-            "一起做家务🧹", "一起整理房间🏠", "一起换床单🛏️", "一起给对方按摩💆",
-            "一起给对方梳头💇", "一起穿情侣装👫", "一起DIY手工艺品🎨", "一起画画🖼️",
-            "一起下棋♟️", "一起玩桌游🎲", "一起做蛋糕🎂", "一起做饼干🍪",
-            "一起做手工🧶", "一起种花🌸", "一起喂鱼🐟", "一起看星星🔭",
-            "一起抓娃娃机🎯", "一起夹娃娃🧸", "一起坐摩天轮🎡", "一起坐过山车🎢",
-            "一起坐海盗船🏴‍☠️", "一起坐旋转木马🎠", "一起溜冰⛸️", "一起滑雪🎿",
-            "一起泡温泉♨️", "一起蒸桑拿🧖", "一起按摩💆‍♀️", "一起做SPA🛁",
-            "一起给对方洗脚🦶", "一起刷牙🪥", "一起敷面膜🧴", "一起化妆💄",
-            "一起剪头发💇‍♀️", "一起染头发🎨", "一起美甲💅", "一起穿汉服👘",
-            "一起穿和服👘", "一起穿婚纱👰", "一起穿西装🤵", "一起做发型💇‍♂️",
-            "一起许愿🎋", "一起放孔明灯🏮", "一起放风筝🪁", "一起吹泡泡🫧",
-            "一起看萤火虫✨", "一起捡贝壳🐚", "一起堆沙堡🏰", "一起划船🚣",
-            "一起钓鱼🎣", "一起喂鸽子🕊️", "一起看蝴蝶🦋", "一起看日出云海☁️",
-            "一起看极光🌌", "一起看流星雨🌠", "一起看彩虹🌈", "一起看夕阳🌤️",
-            "一起看月亮🌙", "一起给对方送惊喜🎁", "一起过生日🎂", "一起过纪念日💕",
-            "一起过情人节💝", "一起过圣诞节🎄", "一起过新年🧧", "一起过中秋🥮",
-            "一起过端午节🐉", "一起过七夕💑", "一起拍照记录美好瞬间📱"
+        // 100件小事清单 - 分5类100项
+        const bucketListData = [
+            // 一、日常陪伴（20件）
+            { text: "一起赖床，抱着对方睡到自然醒", category: "日常陪伴" },
+            { text: "每天互道早安、晚安", category: "日常陪伴" },
+            { text: "窝在沙发上靠在一起追剧、看电影", category: "日常陪伴" },
+            { text: "互相给对方吹头发、梳头发", category: "日常陪伴" },
+            { text: "一起刷牙，对着镜子搞怪", category: "日常陪伴" },
+            { text: "下班/放学接对方回家", category: "日常陪伴" },
+            { text: "生病时细心照顾彼此", category: "日常陪伴" },
+            { text: "分享一天里大大小小的趣事和烦恼", category: "日常陪伴" },
+            { text: "牵手散步，聊聊心里话", category: "日常陪伴" },
+            { text: "帮对方揉肩、捏腿放松", category: "日常陪伴" },
+            { text: "一起熬夜，陪对方赶工作/作业", category: "日常陪伴" },
+            { text: "随手给对方剥水果、递零食", category: "日常陪伴" },
+            { text: "天冷时把对方的手揣进自己口袋", category: "日常陪伴" },
+            { text: "睡前互相讲故事、唠嗑", category: "日常陪伴" },
+            { text: "记住对方的小习惯和忌口", category: "日常陪伴" },
+            { text: "一起打扫房间、整理屋子", category: "日常陪伴" },
+            { text: "蹲在地上帮对方系鞋带", category: "日常陪伴" },
+            { text: "安静依偎，什么话也不说", category: "日常陪伴" },
+            { text: "提醒对方按时吃饭、喝水", category: "日常陪伴" },
+            { text: "模仿对方的小动作逗乐", category: "日常陪伴" },
+            
+            // 二、美食烟火（20件）
+            { text: "一起逛菜市场、超市挑选食材", category: "美食烟火" },
+            { text: "合作做一顿家常饭菜", category: "美食烟火" },
+            { text: "给对方做专属爱心早餐", category: "美食烟火" },
+            { text: "深夜一起煮泡面、吃夜宵", category: "美食烟火" },
+            { text: "分享同一碗饭、同一杯饮品", category: "美食烟火" },
+            { text: "打卡街边小吃、网红美食", category: "美食烟火" },
+            { text: "一起吃火锅，互相涮菜夹菜", category: "美食烟火" },
+            { text: "学着做甜品、奶茶给对方尝", category: "美食烟火" },
+            { text: "去探店小众餐厅、特色菜馆", category: "美食烟火" },
+            { text: "冬天共享一杯热奶茶、烤红薯", category: "美食烟火" },
+            { text: "夏天分吃一支冰淇淋、半个西瓜", category: "美食烟火" },
+            { text: "野餐，带着零食去户外吃东西", category: "美食烟火" },
+            { text: "一起尝试没吃过的异国料理", category: "美食烟火" },
+            { text: "互相喂对方吃东西", category: "美食烟火" },
+            { text: "在家点外卖，边吃边闲聊", category: "美食烟火" },
+            { text: "泡一壶茶/咖啡，慢慢小坐", category: "美食烟火" },
+            { text: "节日一起做节日限定美食", category: "美食烟火" },
+            { text: "打包对方爱吃的食物带回家", category: "美食烟火" },
+            { text: "比赛谁吃东西更快、更可爱", category: "美食烟火" },
+            { text: "约定每月吃一顿大餐犒劳彼此", category: "美食烟火" },
+            
+            // 三、约会出行（20件）
+            { text: "牵手逛夜市、逛步行街", category: "约会出行" },
+            { text: "去公园散步、喂小动物", category: "约会出行" },
+            { text: "一起看日出、看日落", category: "约会出行" },
+            { text: "夜晚压马路，看城市夜景", category: "约会出行" },
+            { text: "坐摩天轮、过山车等游乐设施", category: "约会出行" },
+            { text: "去动物园、海洋馆游玩", category: "约会出行" },
+            { text: "短途周边游，住一晚民宿", category: "约会出行" },
+            { text: "长途旅行，去一座陌生城市", category: "约会出行" },
+            { text: "一起爬山，登顶俯瞰风景", category: "约会出行" },
+            { text: "骑行兜风，穿梭在街道/林间", category: "约会出行" },
+            { text: "看一场线下演唱会、话剧", category: "约会出行" },
+            { text: "逛美术馆、博物馆、画展", category: "约会出行" },
+            { text: "坐公交/地铁，漫无目的闲逛", category: "约会出行" },
+            { text: "去海边踏浪、踩沙子", category: "约会出行" },
+            { text: "露营，一起看星空", category: "约会出行" },
+            { text: "打卡城市里的网红景点", category: "约会出行" },
+            { text: "雨天共撑一把伞漫步", category: "约会出行" },
+            { text: "下雪天一起玩雪、堆雪人", category: "约会出行" },
+            { text: "自驾游，沿途走走停停", category: "约会出行" },
+            { text: "去古镇慢游，感受烟火气息", category: "约会出行" },
+            
+            // 四、趣味互动（20件）
+            { text: "一起玩桌游、卡牌、拼图", category: "趣味互动" },
+            { text: "组队打游戏，并肩作战", category: "趣味互动" },
+            { text: "互相拍照、拍搞怪表情包", category: "趣味互动" },
+            { text: "拍一组情侣写真、居家合照", category: "趣味互动" },
+            { text: "玩真心话大冒险", category: "趣味互动" },
+            { text: "给对方画肖像、涂鸦小画", category: "趣味互动" },
+            { text: "一起K歌，合唱情侣歌曲", category: "趣味互动" },
+            { text: "模仿影视剧经典桥段", category: "趣味互动" },
+            { text: "玩猜谜语、你画我猜", category: "趣味互动" },
+            { text: "挑战手工DIY，做小礼物", category: "趣味互动" },
+            { text: "一起养一盆绿植、小宠物", category: "趣味互动" },
+            { text: "比赛运动：跑步、跳绳、羽毛球", category: "趣味互动" },
+            { text: "互换手机，翻看彼此相册", category: "趣味互动" },
+            { text: "给对方起专属可爱昵称", category: "趣味互动" },
+            { text: "玩躲猫猫、简单小游戏", category: "趣味互动" },
+            { text: "一起学一项新技能（跳舞、乐器等）", category: "趣味互动" },
+            { text: "录制日常vlog，记录生活", category: "趣味互动" },
+            { text: "互相化妆、打扮对方", category: "趣味互动" },
+            { text: "玩水枪、泡泡机，像小孩一样玩耍", category: "趣味互动" },
+            { text: "打赌小游戏，输的人接受小惩罚", category: "趣味互动" },
+            
+            // 五、仪式感 & 回忆珍藏（20件）
+            { text: "记住彼此的生日、纪念日并用心庆祝", category: "仪式感" },
+            { text: "情人节、七夕准备小礼物和惊喜", category: "仪式感" },
+            { text: "手写情书、小卡片送给对方", category: "仪式感" },
+            { text: "收集电影票、车票、门票做成纪念册", category: "仪式感" },
+            { text: "每年拍一张同款姿势合照", category: "仪式感" },
+            { text: "许下共同的短期、长期小愿望", category: "仪式感" },
+            { text: "一起规划未来的生活和小家", category: "仪式感" },
+            { text: "为对方准备一次惊喜约会", category: "仪式感" },
+            { text: "拥抱很久，认真说一句\"我喜欢你\"", category: "仪式感" },
+            { text: "当众大方牵起对方的手", category: "仪式感" },
+            { text: "包容彼此的小脾气，吵架后主动和解", category: "仪式感" },
+            { text: "认真倾听对方的梦想，给予鼓励", category: "仪式感" },
+            { text: "互换礼物，不求贵重只求用心", category: "仪式感" },
+            { text: "一起许愿，吹生日蜡烛", category: "仪式感" },
+            { text: "翻看旧照片，回忆相识相知的过程", category: "仪式感" },
+            { text: "制定情侣清单，逐项打卡完成", category: "仪式感" },
+            { text: "在彼此低谷时，一直陪伴鼓励", category: "仪式感" },
+            { text: "坦诚说出心里话，加深彼此了解", category: "仪式感" },
+            { text: "陪对方去见各自的朋友、家人", category: "仪式感" },
+            { text: "相伴走过岁岁年年，一直陪伴彼此", category: "仪式感" }
         ];
 
         let completedItems = [];
+        let currentFilter = '全部';
 
         function initBucketList() {
             const container = document.getElementById('bucketList');
-            // 随机打乱顺序
-            const shuffledList = [...bucketList].sort(() => Math.random() - 0.5);
+            container.innerHTML = '';
             
-            shuffledList.forEach((item, index) => {
+            const filteredList = currentFilter === '全部' 
+                ? bucketListData 
+                : bucketListData.filter(item => item.category === currentFilter);
+            
+            filteredList.forEach((item, index) => {
+                const globalIndex = bucketListData.indexOf(item);
                 const div = document.createElement('div');
                 div.className = 'bucket-item';
-                div.setAttribute('data-index', index);
+                div.setAttribute('data-index', globalIndex);
                 div.innerHTML = `
                     <div class="bucket-checkbox"></div>
                     <div class="bucket-content">
-                        <div class="bucket-text">${item}</div>
+                        <div class="bucket-text">${item.text}</div>
+                        <div class="bucket-category">${item.category}</div>
                         <div class="bucket-date"></div>
                     </div>
                 `;
-                div.onclick = () => toggleBucketItem(div, index);
+                div.onclick = () => toggleBucketItem(div, globalIndex);
                 container.appendChild(div);
             });
             
             updateBucketProgress();
+        }
+
+        function filterCategory(category, btn) {
+            currentFilter = category;
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            initBucketList();
         }
 
         function toggleBucketItem(element, index) {
@@ -1577,8 +1719,9 @@
 
         function updateBucketProgress() {
             const completed = document.querySelectorAll('.bucket-item.completed').length;
+            const total = currentFilter === '全部' ? 100 : document.querySelectorAll('.bucket-item').length;
             document.getElementById('completedCount').textContent = completed;
-            document.getElementById('progressFill').style.width = (completed / 100 * 100) + '%';
+            document.getElementById('progressFill').style.width = (completed / total * 100) + '%';
         }
 
         // 甜蜜留言
