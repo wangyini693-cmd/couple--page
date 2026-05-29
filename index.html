@@ -1007,103 +1007,39 @@
             <h2 class="section-title">我们去过的地方</h2>
             <div class="map-container">
                 <div class="china-map" id="chinaMap">
-                    <svg viewBox="0 0 550 500" class="map-svg">
-                        <!-- 精细中国地图轮廓 -->
-                        <path class="map-bg" d="M160,120 L170,100 L190,90 L210,85 L230,80 L250,75 L280,70 L310,68 L340,72 L360,80 L380,95 L395,115 L400,135 L395,155 L385,170 L375,180 L365,185 L370,200 L375,220 L380,235 L385,245 L395,250 L405,260 L415,275 L420,290 L425,305 L420,320 L410,335 L395,345 L375,350 L355,355 L335,355 L315,350 L295,340 L275,330 L260,320 L250,310 L245,295 L250,275 L260,255 L265,235 L260,215 L250,195 L235,175 L220,160 L200,150 L180,145 L165,140 Z"/>
+                    <svg viewBox="0 0 550 500" class="map-svg" style="position:relative;">
+                        <!-- 背景地图图片 -->
+                        <image href="images/china-map.jpeg" x="0" y="0" width="550" height="500" preserveAspectRatio="xMidYMid slice"/>
                         
-                        <!-- 新疆 -->
-                        <path class="province" d="M80,90 L100,80 L130,75 L155,85 L170,100 L175,120 L165,140 L145,150 L120,155 L95,150 L75,135 L65,115 Z"/>
-                        
-                        <!-- 西藏 -->
-                        <path class="province" d="M100,155 L120,155 L145,150 L165,140 L175,145 L180,160 L185,180 L175,200 L160,215 L145,225 L130,230 L115,225 L105,210 L95,195 L85,180 L80,165 Z"/>
-                        
-                        <!-- 内蒙古 -->
-                        <path class="province" d="M175,45 L205,40 L240,38 L275,42 L305,50 L330,60 L350,75 L360,95 L355,110 L340,120 L315,125 L285,125 L255,120 L225,115 L200,105 L180,90 Z"/>
-                        
-                        <!-- 青海 -->
-                        <path class="province" d="M180,160 L200,155 L220,160 L235,175 L240,195 L235,215 L220,230 L200,235 L180,230 L170,215 L175,195 Z"/>
-                        
-                        <!-- 四川 -->
-                        <path class="province" d="M235,175 L255,170 L270,180 L280,200 L275,225 L265,245 L250,260 L235,265 L220,255 L210,235 L215,210 L225,190 Z"/>
-                        
-                        <!-- 甘肃 -->
-                        <path class="province" d="M180,145 L200,140 L225,140 L250,145 L265,155 L265,175 L255,195 L240,210 L220,215 L200,210 L180,195 L175,175 Z"/>
-                        
-                        <!-- 云南 -->
-                        <g class="visited-marker" data-province="云南" data-cities="大理,香格里拉" onclick="showProvincePhotos(this)">
-                            <path class="province" fill="#e8f4fd" stroke="#4a90e2" stroke-width="1" d="M265,245 L280,250 L290,270 L285,295 L270,310 L250,315 L235,305 L235,285 L245,265 Z"/>
-                            <circle cx="265" cy="280" r="12" fill="#4a90e2"/>
-                            <text x="265" y="283" text-anchor="middle" fill="white" font-size="10">云南</text>
-                        </g>
-                        
-                        <!-- 贵州 -->
+                        <!-- 贵州省标记 -->
                         <g class="visited-marker" data-province="贵州" data-cities="贵阳" onclick="showProvincePhotos(this)">
-                            <path class="province" fill="#e8f4fd" stroke="#4a90e2" stroke-width="1" d="M235,305 L255,300 L270,310 L275,330 L265,350 L245,355 L230,345 L225,325 Z"/>
-                            <circle cx="252" cy="328" r="12" fill="#4a90e2"/>
-                            <text x="252" y="331" text-anchor="middle" fill="white" font-size="10">贵州</text>
+                            <ellipse cx="245" cy="330" rx="35" ry="25" fill="rgba(74, 144, 226, 0.5)" stroke="#4a90e2" stroke-width="2"/>
+                            <text x="245" y="333" text-anchor="middle" fill="#4a90e2" font-size="11" font-weight="bold">贵州</text>
                         </g>
                         
-                        <!-- 广西 -->
-                        <path class="province" fill="#e8f4fd" stroke="#4a90e2" stroke-width="1" d="M250,355 L270,350 L290,355 L300,375 L295,400 L275,410 L255,405 L240,385 L235,365 Z"/>
-                        
-                        <!-- 广东 -->
+                        <!-- 广东省标记 -->
                         <g class="visited-marker" data-province="广东" data-cities="中山,汕头,东澳岛" onclick="showProvincePhotos(this)">
-                            <path class="province" fill="#e8f4fd" stroke="#4a90e2" stroke-width="1" d="M255,400 L275,395 L300,400 L315,415 L305,435 L280,440 L255,430 L240,415 L235,405 Z"/>
-                            <circle cx="275" cy="418" r="14" fill="#4a90e2"/>
-                            <text x="275" y="421" text-anchor="middle" fill="white" font-size="10">广东</text>
+                            <ellipse cx="280" cy="420" rx="40" ry="30" fill="rgba(74, 144, 226, 0.5)" stroke="#4a90e2" stroke-width="2"/>
+                            <text x="280" y="423" text-anchor="middle" fill="#4a90e2" font-size="11" font-weight="bold">广东</text>
                         </g>
                         
-                        <!-- 香港 -->
+                        <!-- 香港标记 -->
                         <g class="visited-marker" data-province="香港" data-cities="香港" onclick="showProvincePhotos(this)">
-                            <circle cx="300" cy="430" r="8" fill="#4a90e2"/>
-                            <text x="300" y="432" text-anchor="middle" fill="white" font-size="8">港</text>
+                            <ellipse cx="305" cy="435" rx="18" ry="12" fill="rgba(74, 144, 226, 0.7)" stroke="#4a90e2" stroke-width="2"/>
+                            <text x="305" y="438" text-anchor="middle" fill="#4a90e2" font-size="9" font-weight="bold">香港</text>
                         </g>
                         
-                        <!-- 湖南 -->
-                        <path class="province" fill="#e8f4fd" stroke="#4a90e2" stroke-width="1" d="M260,340 L280,335 L295,345 L295,365 L280,380 L260,375 L250,360 Z"/>
-                        
-                        <!-- 江西 -->
-                        <path class="province" fill="#e8f4fd" stroke="#4a90e2" stroke-width="1" d="M285,330 L305,325 L320,335 L320,355 L300,365 L280,360 L275,345 Z"/>
-                        
-                        <!-- 安徽 -->
+                        <!-- 安徽省标记 -->
                         <g class="visited-marker" data-province="安徽" data-cities="合肥" onclick="showProvincePhotos(this)">
-                            <path class="province" fill="#e8f4fd" stroke="#4a90e2" stroke-width="1" d="M320,280 L340,275 L355,285 L350,305 L330,310 L310,300 L315,290 Z"/>
-                            <circle cx="332" cy="292" r="12" fill="#4a90e2"/>
-                            <text x="332" y="295" text-anchor="middle" fill="white" font-size="10">安徽</text>
+                            <ellipse cx="350" cy="290" rx="30" ry="20" fill="rgba(74, 144, 226, 0.5)" stroke="#4a90e2" stroke-width="2"/>
+                            <text x="350" y="293" text-anchor="middle" fill="#4a90e2" font-size="11" font-weight="bold">安徽</text>
                         </g>
                         
-                        <!-- 江苏 -->
-                        <path class="province" fill="#e8f4fd" stroke="#4a90e2" stroke-width="1" d="M320,255 L345,250 L365,260 L360,280 L340,285 L320,280 L315,265 Z"/>
-                        
-                        <!-- 浙江 -->
-                        <path class="province" fill="#e8f4fd" stroke="#4a90e2" stroke-width="1" d="M335,300 L355,295 L370,305 L365,325 L345,330 L330,320 L332,310 Z"/>
-                        
-                        <!-- 福建 -->
-                        <path class="province" fill="#e8f4fd" stroke="#4a90e2" stroke-width="1" d="M335,335 L355,330 L365,345 L360,365 L340,370 L330,360 L332,345 Z"/>
-                        
-                        <!-- 山东 -->
-                        <path class="province" fill="#e8f4fd" stroke="#4a90e2" stroke-width="1" d="M330,230 L355,225 L370,235 L365,255 L345,260 L325,255 L328,242 Z"/>
-                        
-                        <!-- 河南 -->
-                        <path class="province" fill="#e8f4fd" stroke="#4a90e2" stroke-width="1" d="M310,250 L340,245 L355,260 L350,280 L325,285 L300,280 L305,265 Z"/>
-                        
-                        <!-- 山西 -->
-                        <path class="province" fill="#e8f4fd" stroke="#4a90e2" stroke-width="1" d="M285,225 L315,220 L330,235 L325,255 L300,260 L275,250 L280,235 Z"/>
-                        
-                        <!-- 河北 -->
-                        <path class="province" fill="#e8f4fd" stroke="#4a90e2" stroke-width="1" d="M295,185 L330,180 L350,195 L345,220 L315,225 L285,220 L288,200 Z"/>
-                        
-                        <!-- 北京天津 -->
-                        <path class="province" fill="#e8f4fd" stroke="#4a90e2" stroke-width="1" d="M310,195 L325,192 L330,200 L322,208 L308,205 Z"/>
-                        
-                        <!-- 辽宁 -->
-                        <path class="province" fill="#e8f4fd" stroke="#4a90e2" stroke-width="1" d="M340,145 L365,140 L385,155 L380,180 L355,185 L335,175 L338,158 Z"/>
-                        
-                        <!-- 吉林 -->
-                        <path class="province" fill="#e8f4fd" stroke="#4a90e2" stroke-width="1" d="M365,115 L390,108 L410,120 L405,145 L380,150 L360,142 L363,125 Z"/>
-                        
-                        <!-- 黑龙江 -->
-                        <path class="province" fill="#e8f4fd" stroke="#4a90e2" stroke-width="1" d="M365,65 L400,55 L430,65 L435,95 L410,105 L375,100 L365,82 Z"/>
+                        <!-- 云南省标记 -->
+                        <g class="visited-marker" data-province="云南" data-cities="大理,香格里拉" onclick="showProvincePhotos(this)">
+                            <ellipse cx="185" cy="350" rx="35" ry="30" fill="rgba(74, 144, 226, 0.5)" stroke="#4a90e2" stroke-width="2"/>
+                            <text x="185" y="353" text-anchor="middle" fill="#4a90e2" font-size="11" font-weight="bold">云南</text>
+                        </g>
                     </svg>
                 </div>
                 <div class="visited-list">
