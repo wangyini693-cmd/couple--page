@@ -122,6 +122,13 @@
             font-weight: bold;
         }
 
+        .hero .hero-days {
+            font-size: 1.5em;
+            color: #6ba3d6;
+            margin-top: 20px;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
         .hero .heart {
             display: none;
         }
@@ -909,6 +916,7 @@
         <section class="hero">
             <h1>Our Love Story</h1>
             <p class="names">小苗总💙Chloe</p>
+            <div class="hero-days" id="heroDays">在一起 <span id="heroDaysCount">0</span> 天 💙</div>
         </section>
 
         <!-- 倒计时区 -->
@@ -1141,6 +1149,7 @@
             const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
             document.getElementById('daysCount').innerHTML = `${diffDays}<span> 天</span>`;
+            document.getElementById('heroDaysCount').textContent = diffDays;
 
             // 计算里程碑日期
             const milestones = [
