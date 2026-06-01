@@ -22,7 +22,7 @@
             overflow-x: hidden;
         }
 
-        /* 浮动装饰元素 */
+        /* ===== 浮动装饰元素（加强版） ===== */
         .floating-elements {
             position: fixed;
             top: 0;
@@ -37,19 +37,38 @@
         .floating-heart {
             position: absolute;
             font-size: 25px;
-            opacity: 0.4;
+            opacity: 0.5;
             animation: floatHeart 12s infinite ease-in-out;
         }
 
         @keyframes floatHeart {
             0%, 100% { transform: translateY(100vh) rotate(0deg) scale(1); opacity: 0; }
-            10% { opacity: 0.4; }
+            10% { opacity: 0.5; }
             50% { transform: translateY(50vh) rotate(180deg) scale(1.2); }
-            90% { opacity: 0.4; }
+            90% { opacity: 0.5; }
             100% { transform: translateY(-100px) rotate(360deg) scale(1); opacity: 0; }
         }
 
-        /* 导航栏 */
+        /* ===== 闪亮粒子效果 ===== */
+        .sparkle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ffd700;
+            box-shadow: 0 0 8px #ffd700, 0 0 16px #ffd700;
+            animation: sparkleFloat 6s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes sparkleFloat {
+            0%, 100% { opacity: 0; transform: translateY(0) scale(0); }
+            30% { opacity: 1; transform: translateY(-80px) scale(1); }
+            70% { opacity: 1; transform: translateY(-160px) scale(0.8); }
+            100% { opacity: 0; transform: translateY(-200px) scale(0); }
+        }
+
+        /* ===== 导航栏 ===== */
         nav {
             position: fixed;
             top: 0;
@@ -81,7 +100,7 @@
             transform: translateY(-2px);
         }
 
-        /* 主要内容 */
+        /* ===== 主要内容 ===== */
         main {
             position: relative;
             z-index: 1;
@@ -97,7 +116,7 @@
             justify-content: center;
         }
 
-        /* 首屏 */
+        /* ===== 首屏 ===== */
         .hero {
             text-align: center;
             padding-top: 100px;
@@ -131,6 +150,30 @@
 
         .hero .heart {
             display: none;
+        }
+
+        /* 首屏 Emoji 装饰 */
+        .hero-emoji-row {
+            font-size: 2.5em;
+            margin: 20px 0;
+            animation: fadeInUp 1s ease 0.3s both;
+            letter-spacing: 15px;
+        }
+
+        .hero-emoji-row span {
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        .hero-emoji-row span:nth-child(2) { animation-delay: 0.1s; }
+        .hero-emoji-row span:nth-child(3) { animation-delay: 0.2s; }
+        .hero-emoji-row span:nth-child(4) { animation-delay: 0.3s; }
+        .hero-emoji-row span:nth-child(5) { animation-delay: 0.4s; }
+        .hero-emoji-row span:nth-child(6) { animation-delay: 0.5s; }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
         }
 
         @keyframes fadeInUp {
@@ -171,6 +214,23 @@
             text-align: center;
             max-width: 700px;
             width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 卡片左上角装饰 */
+        .countdown-container::before {
+            content: '💙';
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-size: 1.5em;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
         }
 
         .countdown-days {
@@ -229,7 +289,7 @@
             color: #4a90e2;
         }
 
-        /* 相册区 */
+        /* ===== 相册区 ===== */
         .gallery-section {
             background: white;
         }
@@ -358,7 +418,7 @@
             font-size: 0.9em;
         }
 
-        /* 游戏区 */
+        /* ===== 游戏区 ===== */
         .game-section {
             background: linear-gradient(180deg, rgba(74, 144, 226, 0.03) 0%, transparent 100%);
         }
@@ -373,6 +433,7 @@
             border-radius: 30px;
             padding: 40px;
             box-shadow: 0 20px 60px rgba(74, 144, 226, 0.15);
+            text-align: center;
         }
 
         .game-question {
@@ -403,11 +464,38 @@
         .game-option:hover {
             border-color: #4a90e2;
             transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.15);
         }
 
         .game-option.selected {
             background: #4a90e2;
             color: white;
+        }
+
+        .game-option.correct {
+            background: #52c41a;
+            color: white;
+            border-color: #52c41a;
+            animation: correctPulse 0.5s ease;
+        }
+
+        .game-option.wrong {
+            background: #ff4d4f;
+            color: white;
+            border-color: #ff4d4f;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes correctPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
         }
 
         .game-result {
@@ -457,27 +545,65 @@
             border: 2px solid #4a90e2;
         }
 
-        /* 甜蜜留言 */
-        .sweet-notes {
-            margin-top: 50px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 15px;
+        /* 满屏爱心特效 */
+        #perfectOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(232, 244, 253, 0.97);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
-        .sweet-note {
-            background: linear-gradient(135deg, #e8f4fd, #d4e8f5);
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            font-size: 1em;
+        #perfectScore {
+            font-size: 120px;
+            animation: bigHeart 1s ease-in-out infinite;
+        }
+
+        #perfectText {
+            font-size: 2.5em;
             color: #4a90e2;
-            animation: fadeInUp 0.5s ease both;
+            margin-top: 20px;
+            font-weight: bold;
             font-family: 'Ma Shan Zheng', cursive;
-            font-size: 1.1em;
+            animation: fadeInUp 1s ease;
         }
 
-        /* 旅行地图 */
+        #perfectSubtext {
+            font-size: 1.2em;
+            color: #6ba3d6;
+            margin-top: 15px;
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+
+        #perfectClose {
+            margin-top: 30px;
+            font-size: 1em;
+            color: #999;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        @keyframes bigHeart {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        @keyframes fallHeart {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== 旅行地图 ===== */
         .map-section {
             background: linear-gradient(180deg, white 0%, rgba(74, 144, 226, 0.03) 100%);
             min-height: auto;
@@ -651,14 +777,14 @@
             font-size: 1.1em;
         }
 
-        /* 100件小事清单 */
+        /* ===== 100件小事清单 ===== */
         .bucket-list-section {
             background: linear-gradient(180deg, rgba(74, 144, 226, 0.03) 0%, #f0f7ff 100%);
             padding: 100px 20px;
         }
 
         .bucket-list-container {
-            max-width: 800px;
+            max-width: 1000px;
             width: 100%;
             background: white;
             border-radius: 30px;
@@ -694,120 +820,137 @@
             transition: width 0.5s ease;
         }
 
-        .bucket-categories {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            margin-bottom: 25px;
-        }
-
-        .category-btn {
-            background: white;
-            border: 2px solid #4a90e2;
-            color: #4a90e2;
-            padding: 8px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.95em;
-        }
-
-        .category-btn:hover {
-            background: #e8f4fd;
-        }
-
-        .category-btn.active {
-            background: #4a90e2;
-            color: white;
-        }
-
-        .bucket-list {
+        .bucket-modules {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
         }
 
-        .bucket-item {
+        .bucket-module {
             background: linear-gradient(135deg, #f8fcff, #eef6fc);
-            border: 2px solid transparent;
-            border-radius: 15px;
-            padding: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            border-radius: 20px;
+            padding: 25px;
+            border: 2px solid #e8f4fd;
+        }
+
+        .bucket-module-header {
             display: flex;
             align-items: center;
             gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed #d4e8f5;
         }
 
-        .bucket-item:hover {
-            border-color: #4a90e2;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.2);
+        .bucket-module-title {
+            font-size: 1.2em;
+            color: #4a90e2;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-weight: bold;
         }
 
-        .bucket-item.completed {
-            background: linear-gradient(135deg, #e8f4fd, #d4e8f5);
-            border-color: #4a90e2;
+        .bucket-module-count {
+            font-size: 0.8em;
+            color: #8cb8dc;
+            margin-left: auto;
         }
 
-        .bucket-item.completed .bucket-checkbox {
+        .bucket-items-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 320px;
+            overflow-y: auto;
+        }
+
+        .bucket-items-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .bucket-items-list::-webkit-scrollbar-thumb {
+            background: #4a90e2;
+            border-radius: 2px;
+        }
+
+        .bucket-item-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+            color: #5a9fd4;
+        }
+
+        .bucket-item-row:hover {
+            background: rgba(74, 144, 226, 0.08);
+            transform: translateX(5px);
+        }
+
+        .bucket-item-row.completed {
+            color: #8cb8dc;
+            text-decoration: line-through;
+        }
+
+        .bucket-item-row.completed .item-check {
             background: #4a90e2;
             border-color: #4a90e2;
-        }
-
-        .bucket-item.completed .bucket-checkbox::after {
-            content: '✓';
             color: white;
         }
 
-        .bucket-item.completed .bucket-text {
-            text-decoration: line-through;
-            color: #8cb8dc;
-        }
-
-        .bucket-checkbox {
-            width: 24px;
-            height: 24px;
+        .item-check {
+            width: 20px;
+            height: 20px;
             border: 2px solid #4a90e2;
             border-radius: 50%;
             flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 0.7em;
+            margin-top: 2px;
         }
 
-        .bucket-text {
-            color: #4a90e2;
-            font-size: 0.95em;
+        .item-text {
             flex: 1;
+            line-height: 1.5;
         }
 
-        .bucket-category {
-            font-size: 0.75em;
-            color: #8cb8dc;
-            margin-top: 3px;
+        /* ===== 甜蜜留言 ===== */
+        .sweet-notes {
+            margin-top: 50px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 700px;
+            width: 100%;
         }
 
-        .bucket-item.completed .bucket-category {
-            color: #d4e8f5;
+        .sweet-note {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+            padding: 25px 20px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 1.1em;
+            color: #4a90e2;
+            animation: fadeInUp 0.5s ease both;
+            font-family: 'Ma Shan Zheng', cursive;
+            line-height: 1.8;
+            border: 2px solid rgba(74, 144, 226, 0.25);
+            box-shadow: 0 4px 20px rgba(74, 144, 226, 0.12);
+            transition: all 0.3s ease;
         }
 
-        .bucket-date {
-            font-size: 0.75em;
-            color: #8cb8dc;
-            margin-top: 5px;
-            display: none;
+        .sweet-note:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(74, 144, 226, 0.15);
+            border-color: #4a90e2;
         }
 
-        .bucket-item.completed .bucket-date {
-            display: block;
-        }
-
-        @keyframes heartFloat {
-            0% { transform: translateY(0) scale(1); opacity: 1; }
-            100% { transform: translateY(-50px) scale(1.5); opacity: 0; }
-        }
+        /* ===== 照片预览 ===== */
         .lightbox {
             display: none;
             position: fixed;
@@ -841,7 +984,12 @@
             cursor: pointer;
         }
 
-        /* 页脚 */
+        @keyframes heartFloat {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-50px) scale(1.5); opacity: 0; }
+        }
+
+        /* ===== 页脚 ===== */
         footer {
             text-align: center;
             padding: 40px;
@@ -853,7 +1001,7 @@
             color: #e88a94;
         }
 
-        /* 响应式 */
+        /* ===== 响应式 ===== */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5em;
@@ -894,12 +1042,28 @@
                 left: -16px;
                 right: auto;
             }
+
+            .bucket-modules {
+                grid-template-columns: 1fr;
+            }
+
+            .sweet-notes {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-emoji-row {
+                font-size: 1.8em;
+                letter-spacing: 8px;
+            }
         }
     </style>
 </head>
 <body>
     <!-- 浮动爱心装饰 -->
     <div class="floating-elements" id="floatingElements"></div>
+
+    <!-- 闪亮粒子装饰 -->
+    <div class="floating-elements" id="sparkleElements"></div>
 
     <!-- 导航 -->
     <nav>
@@ -913,20 +1077,23 @@
 
     <main>
         <!-- 首屏 -->
-        <section class="hero">
+        <section class="hero" id="hero">
             <h1>Our Love Story</h1>
             <p class="names">小苗总💙Chloe</p>
-            <div class="hero-days" id="heroDays">在一起 <span id="heroDaysCount">0</span> 天 💙</div>
+            <div class="hero-emoji-row" id="heroEmojiRow">
+                <span>💙</span><span>✨</span><span>🌸</span><span>💕</span><span>🤟</span><span>💎</span>
+            </div>
+            <div class="hero-days" id="heroDays">在一起 <span id="heroDaysCount">82</span> 天 💙</div>
         </section>
 
         <!-- 倒计时区 -->
         <section class="countdown-section" id="countdown">
             <h2 class="section-title">我们的时光</h2>
             <div class="countdown-container">
-                <div class="countdown-days" id="daysCount">0<span> 天</span></div>
+                <div class="countdown-days" id="daysCount">82<span> 天</span></div>
                 <div class="countdown-label">在一起的每一天</div>
                 <div class="since-date">从 2026年3月8日 开始 💙</div>
-                
+
                 <div class="birthdays">
                     <div class="birthday-item">
                         <div class="birthday-name">苗总 🎂</div>
@@ -1016,34 +1183,28 @@
             <div class="map-container">
                 <div class="china-map" id="chinaMap">
                     <svg viewBox="0 0 550 500" class="map-svg" style="position:relative;">
-                        <!-- 背景地图图片 -->
                         <image href="images/china-map.jpeg" x="0" y="0" width="550" height="500" preserveAspectRatio="xMidYMid slice"/>
-                        
-                        <!-- 贵州省标记 -->
+
                         <g class="visited-marker" data-province="贵州" data-cities="贵阳" onclick="showProvincePhotos(this)">
                             <ellipse cx="245" cy="330" rx="35" ry="25" fill="rgba(74, 144, 226, 0.5)" stroke="#4a90e2" stroke-width="2"/>
                             <text x="245" y="333" text-anchor="middle" fill="#4a90e2" font-size="11" font-weight="bold">贵州</text>
                         </g>
-                        
-                        <!-- 广东省标记 -->
+
                         <g class="visited-marker" data-province="广东" data-cities="中山,汕头,东澳岛" onclick="showProvincePhotos(this)">
                             <ellipse cx="280" cy="420" rx="40" ry="30" fill="rgba(74, 144, 226, 0.5)" stroke="#4a90e2" stroke-width="2"/>
                             <text x="280" y="423" text-anchor="middle" fill="#4a90e2" font-size="11" font-weight="bold">广东</text>
                         </g>
-                        
-                        <!-- 香港标记 -->
+
                         <g class="visited-marker" data-province="香港" data-cities="香港" onclick="showProvincePhotos(this)">
                             <ellipse cx="305" cy="435" rx="18" ry="12" fill="rgba(74, 144, 226, 0.7)" stroke="#4a90e2" stroke-width="2"/>
                             <text x="305" y="438" text-anchor="middle" fill="#4a90e2" font-size="9" font-weight="bold">香港</text>
                         </g>
-                        
-                        <!-- 安徽省标记 -->
+
                         <g class="visited-marker" data-province="安徽" data-cities="合肥" onclick="showProvincePhotos(this)">
                             <ellipse cx="350" cy="290" rx="30" ry="20" fill="rgba(74, 144, 226, 0.5)" stroke="#4a90e2" stroke-width="2"/>
                             <text x="350" y="293" text-anchor="middle" fill="#4a90e2" font-size="11" font-weight="bold">安徽</text>
                         </g>
-                        
-                        <!-- 云南省标记 -->
+
                         <g class="visited-marker" data-province="云南" data-cities="大理,香格里拉" onclick="showProvincePhotos(this)">
                             <ellipse cx="185" cy="350" rx="35" ry="30" fill="rgba(74, 144, 226, 0.5)" stroke="#4a90e2" stroke-width="2"/>
                             <text x="185" y="353" text-anchor="middle" fill="#4a90e2" font-size="11" font-weight="bold">云南</text>
@@ -1065,7 +1226,6 @@
                     <p class="map-hint">点击地图标记或城市名称查看照片</p>
                 </div>
             </div>
-            <!-- 照片弹窗 -->
             <div class="map-lightbox" id="mapLightbox" onclick="closeMapLightbox()">
                 <div class="map-lightbox-content" onclick="event.stopPropagation()">
                     <span class="map-lightbox-close" onclick="closeMapLightbox()">&times;</span>
@@ -1082,13 +1242,16 @@
             <h2 class="section-title">默契大考验</h2>
             <div class="game-container">
                 <div class="game-card" id="gameCard">
-                    <div class="game-question" id="gameQuestion">默契大考验 💕<br><span style="font-size:0.8em;color:#8cb8dc;">（小苗总先答，答完传给Chloe）</span></div>
+                    <div class="game-question" id="gameQuestion">第一次牵手在哪里？ 💕</div>
                     <div class="game-options" id="gameOptions">
-                        <div class="game-option" onclick="selectAnswer(0)">开始测试 💙</div>
+                        <div class="game-option" onclick="selectAnswer(0)">平安大厦 🌆</div>
+                        <div class="game-option" onclick="selectAnswer(1)">深圳湾万象 🌊</div>
+                        <div class="game-option" onclick="selectAnswer(2)">前海石公园 🏞️</div>
+                        <div class="game-option" onclick="selectAnswer(3)">欢乐海岸 🎡</div>
                     </div>
                     <div class="game-result" id="gameResult" style="display:none;">
-                        <div class="game-score" id="gameScore">0%</div>
-                        <div class="game-message" id="gameMessage">默契度分析中...</div>
+                        <div class="game-score" id="gameScore">100%</div>
+                        <div class="game-message" id="gameMessage">🎉 默契度100分 🎉</div>
                         <div class="game-buttons">
                             <button class="game-btn" onclick="restartGame()">再玩一次</button>
                         </div>
@@ -1107,16 +1270,45 @@
                         <div class="progress-fill" id="progressFill"></div>
                     </div>
                 </div>
-                <div class="bucket-categories">
-                    <button class="category-btn active" onclick="filterCategory('全部', this)">全部 💙</button>
-                    <button class="category-btn" onclick="filterCategory('日常陪伴', this)">日常陪伴 ☀️</button>
-                    <button class="category-btn" onclick="filterCategory('美食烟火', this)">美食烟火 🍳</button>
-                    <button class="category-btn" onclick="filterCategory('约会出行', this)">约会出行 ✈️</button>
-                    <button class="category-btn" onclick="filterCategory('趣味互动', this)">趣味互动 🎮</button>
-                    <button class="category-btn" onclick="filterCategory('仪式感', this)">仪式感 💕</button>
-                </div>
-                <div class="bucket-list" id="bucketList">
-                    <!-- JS生成清单 -->
+
+                <!-- 四个模块 -->
+                <div class="bucket-modules">
+                    <!-- 模块一：日常陪伴 -->
+                    <div class="bucket-module">
+                        <div class="bucket-module-header">
+                            <span style="font-size:1.5em;">☀️</span>
+                            <span class="bucket-module-title">一、日常陪伴</span>
+                            <span class="bucket-module-count">20件</span>
+                        </div>
+                        <div class="bucket-items-list" id="moduleDaily"></div>
+                    </div>
+                    <!-- 模块二：美食烟火 -->
+                    <div class="bucket-module">
+                        <div class="bucket-module-header">
+                            <span style="font-size:1.5em;">🍳</span>
+                            <span class="bucket-module-title">二、美食烟火</span>
+                            <span class="bucket-module-count">20件</span>
+                        </div>
+                        <div class="bucket-items-list" id="moduleFood"></div>
+                    </div>
+                    <!-- 模块三：约会出行 -->
+                    <div class="bucket-module">
+                        <div class="bucket-module-header">
+                            <span style="font-size:1.5em;">✈️</span>
+                            <span class="bucket-module-title">三、约会出行</span>
+                            <span class="bucket-module-count">20件</span>
+                        </div>
+                        <div class="bucket-items-list" id="moduleDate"></div>
+                    </div>
+                    <!-- 模块四：趣味互动 + 仪式感 -->
+                    <div class="bucket-module">
+                        <div class="bucket-module-header">
+                            <span style="font-size:1.5em;">🎮</span>
+                            <span class="bucket-module-title">四、趣味互动 & 仪式感</span>
+                            <span class="bucket-module-count">20件</span>
+                        </div>
+                        <div class="bucket-items-list" id="moduleFun"></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1141,42 +1333,17 @@
     </div>
 
     <script>
-        // 纪念日计算
+        // ===== 固定82天 =====
+        const FIXED_DAYS = 82;
+
         function updateCountdown() {
-            const startDate = new Date('2026-03-08');
-            const today = new Date();
-            const diffTime = today - startDate;
-            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-            document.getElementById('daysCount').innerHTML = `${diffDays}<span> 天</span>`;
-            document.getElementById('heroDaysCount').textContent = diffDays;
-
-            // 计算里程碑日期
-            const milestones = [
-                { id: 'milestone100', days: 100 },
-                { id: 'milestone365', days: 365 },
-                { id: 'milestoneAnniversary', days: 365 }
-            ];
-
-            milestones.forEach(m => {
-                const milestoneDate = new Date(startDate);
-                milestoneDate.setDate(milestoneDate.getDate() + m.days);
-                const remaining = Math.ceil((milestoneDate - today) / (1000 * 60 * 60 * 24));
-
-                if (remaining > 0) {
-                    document.getElementById(m.id).textContent = `${remaining}天后达成`;
-                } else if (remaining === 0) {
-                    document.getElementById(m.id).textContent = `就是今天！🎉`;
-                } else {
-                    document.getElementById(m.id).textContent = `已达成 ✓`;
-                }
-            });
+            document.getElementById('daysCount').innerHTML = `${FIXED_DAYS}<span> 天</span>`;
+            document.getElementById('heroDaysCount').textContent = FIXED_DAYS;
         }
 
-        // 浮动爱心
+        // ===== 浮动爱心 & 闪亮粒子 =====
         function createFloatingHearts() {
             const container = document.getElementById('floatingElements');
-            // 活泼的爱心emoji组合
             const hearts = ['💙', '💕', '💗', '💖', '🩵', '💎', '💧', '✨', '🌸', '😘', '🤟', '💫', '⭐'];
 
             for (let i = 0; i < 30; i++) {
@@ -1192,7 +1359,23 @@
             }
         }
 
-        // 相册照片
+        function createSparkles() {
+            const container = document.getElementById('sparkleElements');
+            for (let i = 0; i < 20; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = (Math.random() * 70 + 10) + '%';
+                sparkle.style.animationDelay = Math.random() * 8 + 's';
+                sparkle.style.animationDuration = (4 + Math.random() * 4) + 's';
+                const colors = ['#ffd700', '#ff69b4', '#4a90e2', '#7eb8ff', '#ff6b6b'];
+                sparkle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                sparkle.style.boxShadow = `0 0 8px ${colors[Math.floor(Math.random() * colors.length)]}`;
+                container.appendChild(sparkle);
+            }
+        }
+
+        // ===== 相册照片 =====
         function initGallery() {
             const gallery = document.getElementById('photoGallery');
             const cities = ['大理', '香格里拉', '中山', '香港', '贵阳', '合肥', '汕头', '东澳岛 ⏳'];
@@ -1206,7 +1389,7 @@
             }
         }
 
-        // 照片预览
+        // ===== 照片预览 =====
         function openLightbox(src) {
             document.getElementById('lightboxImg').src = src;
             document.getElementById('lightbox').classList.add('active');
@@ -1216,236 +1399,106 @@
             document.getElementById('lightbox').classList.remove('active');
         }
 
-// 默契问答游戏 - 双人模式
-        const questions = [
-            { q: "对方最爱的颜色是什么？", options: ["蓝色 💙", "粉色 💗", "紫色 💜", "绿色 💚"], correct: 0 },
-            { q: "我们第一次牵手在哪里？", options: ["平安大厦 🌆", "深圳湾万象 🌊", "前海石公园 🏞️", "欢乐海岸 🎡"], correct: 0 },
-            { q: "谁更喜欢睡懒觉？", options: ["苗总 😴", "旖旎 🌞", "都很爱睡 😴😴", "都不爱睡"], correct: 0 },
-            { q: "谁先告白的？", options: ["小苗总 💕", "Chloe 💕", "同时说出来 ❤️", "不告诉你 🤫"], correct: 1 },
-            { q: "最喜欢的约会方式是？", options: ["一起看电影 🎬", "一起吃饭 🍽️", "一起散步 🚶", "做什么都好 💑"], correct: 3 },
-            { q: "吵架后谁先道歉？", options: ["小苗总 🙋", "Chloe 🙋", "看情况 🤔", "从来不吵 😤"], correct: 2 },
-            { q: "最爱吃的食物是什么？", options: ["火锅 🍲", "烧烤 🍖", "甜品 🍰", "只要一起吃都爱 🍴"], correct: 3 },
-            { q: "睡前最喜欢做什么？", options: ["聊天 💬", "看剧 📺", "各玩手机 📱", "抱着睡觉 😴"], correct: 3 },
-            { q: "对方最可爱的地方是哪里？", options: ["笑容 😊", "眼睛 👀", "抱抱时 🤗", "所有地方 💕"], correct: 3 }
-        ];
-
-        let currentQuestion = 0;
-        let player1Score = 0;
-        let player2Score = 0;
-        let player1Answers = [];
-        let player2Answers = [];
-        let currentPlayer = 1;
-
+        // ===== 默契游戏（单题版：第一次牵手在哪里→平安大厦）=====
         function selectAnswer(index) {
-            if (currentQuestion === 0 && index === 0) {
-                startGame();
-                return;
-            }
-
             const options = document.querySelectorAll('.game-option');
-            options.forEach(o => o.classList.remove('selected'));
-            options[index].classList.add('selected');
+            const correctIndex = 0; // 平安大厦 = index 0
 
-            // 保存答案
-            if (currentPlayer === 1) {
-                player1Answers.push(index);
+            if (index === correctIndex) {
+                // 答对！
+                options[index].classList.add('correct');
+                options.forEach(o => { if (o !== options[index]) o.classList.add('wrong'); });
+                setTimeout(() => {
+                    showPerfectHearts();
+                }, 600);
             } else {
-                player2Answers.push(index);
+                // 答错
+                options[index].classList.add('wrong');
+                options[correctIndex].classList.add('correct');
+                setTimeout(() => {
+                    options.forEach(o => {
+                        o.classList.remove('wrong', 'correct');
+                    });
+                    restartGame();
+                }, 1200);
             }
-
-            setTimeout(() => {
-                if (currentPlayer === 1) {
-                    // 玩家1答完，轮到玩家2
-                    currentPlayer = 2;
-                    showPlayer2Answer();
-                } else {
-                    // 玩家2答完，比较答案
-                    const correct = player1Answers[currentQuestion] === player2Answers[currentQuestion];
-                    if (correct) {
-                        player1Score++;
-                        player2Score++;
-                        if (currentQuestion === 1) { // 第二题（第一次牵手）答对显示特效
-                            showPerfectHearts();
-                            return;
-                        }
-                    }
-                    currentQuestion++;
-                    currentPlayer = 1;
-                    
-                    if (currentQuestion < questions.length) {
-                        showPlayer1Answer();
-                    } else {
-                        showResult();
-                    }
-                }
-            }, 500);
         }
 
-        function showPlayer2Answer() {
-            document.getElementById('gameQuestion').innerHTML = `
-                <div style="font-size:0.8em;color:#8cb8dc;">小苗总已答完 ✓</div>
-                <div style="margin-top:10px;">轮到 Chloe 回答</div>
-            `;
-            const q = questions[currentQuestion];
-            const optionsHtml = q.options.map((opt, i) =>
-                `<div class="game-option" onclick="selectAnswer(${i})">${opt}</div>`
-            ).join('');
-            document.getElementById('gameOptions').innerHTML = optionsHtml;
-        }
-
-        function showPlayer1Answer() {
-            document.getElementById('gameQuestion').innerHTML = `
-                <div style="font-size:1.2em;color:#4a90e2;">Q${currentQuestion + 1}: ${questions[currentQuestion].q}</div>
-                <div style="font-size:0.9em;color:#8cb8dc;margin-top:10px;">轮到小苗总回答</div>
-            `;
-            const q = questions[currentQuestion];
-            const optionsHtml = q.options.map((opt, i) =>
-                `<div class="game-option" onclick="selectAnswer(${i})">${opt}</div>`
-            ).join('');
-            document.getElementById('gameOptions').innerHTML = optionsHtml;
-        }
-
-            const options = document.querySelectorAll('.game-option');
-            options.forEach(o => o.classList.remove('selected'));
-            options[index].classList.add('selected');
-
-            setTimeout(() => {
-                if (index === questions[currentQuestion].correct) {
-                    score++;
-                    // 第一题答对显示满屏爱心特效
-                    if (currentQuestion === 0) {
-                        showPerfectHearts();
-                        return;
-                    }
-                }
-                currentQuestion++;
-
-                if (currentQuestion < questions.length) {
-                    showQuestion();
-                } else {
-                    showResult();
-                }
-            }, 500);
-        }
-
-        // 满屏爱心特效 - 两人答案一致
         function showPerfectHearts() {
+            // 移除已存在的 overlay
+            const existing = document.getElementById('perfectOverlay');
+            if (existing) existing.remove();
+
             const overlay = document.createElement('div');
             overlay.id = 'perfectOverlay';
-            overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(232,244,253,0.95);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;';
-            
-            for (let i = 0; i < 50; i++) {
+
+            // 满屏飘落爱心
+            for (let i = 0; i < 60; i++) {
                 const heart = document.createElement('div');
                 heart.textContent = ['💙', '💕', '💗', '💖', '🩵', '💎'][Math.floor(Math.random() * 6)];
-                heart.style.cssText = `position:absolute;font-size:${20 + Math.random() * 30}px;animation:fallHeart ${2 + Math.random() * 2}s linear forwards;left:${Math.random() * 100}%;top:-50px;`;
+                heart.style.cssText = `position:absolute;font-size:${15 + Math.random() * 35}px;animation:fallHeart ${2 + Math.random() * 2}s linear forwards;left:${Math.random() * 100}%;top:-50px;`;
                 overlay.appendChild(heart);
             }
 
+            // 中央大爱心
             const centerHeart = document.createElement('div');
-            centerHeart.style.cssText = 'font-size:100px;animation:bigHeart 1s ease-in-out;';
+            centerHeart.id = 'perfectScore';
             centerHeart.textContent = '💙';
             overlay.appendChild(centerHeart);
 
             const text = document.createElement('div');
+            text.id = 'perfectText';
             text.textContent = '🎉 默契度100分 🎉';
-            text.style.cssText = 'font-size:2.5em;color:#4a90e2;margin-top:20px;font-weight:bold;font-family:"Ma Shan Zheng";animation:fadeInUp 1s ease;';
             overlay.appendChild(text);
 
             const subtext = document.createElement('div');
+            subtext.id = 'perfectSubtext';
             subtext.textContent = '第一次牵手 - 平安大厦 💕';
-            subtext.style.cssText = 'font-size:1.2em;color:#6ba3d6;margin-top:10px;';
             overlay.appendChild(subtext);
 
+            const closeBtn = document.createElement('div');
+            closeBtn.id = 'perfectClose';
+            closeBtn.textContent = '点击任意处关闭 💙';
+            closeBtn.style.cssText = 'cursor:pointer;padding:10px 20px;border-radius:20px;background:rgba(74,144,226,0.1);';
+            closeBtn.onclick = () => overlay.remove();
+            overlay.appendChild(closeBtn);
+
+            overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(232,244,253,0.97);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;';
+
+            // 添加动画样式
             const style = document.createElement('style');
             style.textContent = `
                 @keyframes fallHeart {
                     0% { transform: translateY(0) rotate(0deg); opacity: 1; }
                     100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
                 }
-                @keyframes bigHeart {
-                    0%,100% { transform: scale(1); }
-                    50% { transform: scale(1.5); }
-                }
             `;
             overlay.appendChild(style);
 
             document.body.appendChild(overlay);
-
-            setTimeout(() => {
-                overlay.remove();
-                currentQuestion++;
-                currentPlayer = 1;
-                if (currentQuestion < questions.length) {
-                    showPlayer1Answer();
-                } else {
-                    showResult();
-                }
-            }, 3500);
-        }
-
-        function startGame() {
-            currentQuestion = 0;
-            player1Score = 0;
-            player2Score = 0;
-            player1Answers = [];
-            player2Answers = [];
-            currentPlayer = 1;
-            showPlayer1Answer();
-        }
-
-        function showPlayer1Answer() {
-            const q = questions[currentQuestion];
-            document.getElementById('gameQuestion').innerHTML = `<div style="font-size:1.2em;color:#4a90e2;">Q${currentQuestion + 1}: ${q.q}</div><div style="font-size:0.9em;color:#8cb8dc;margin-top:10px;">轮到小苗总回答</div>`;
-            document.getElementById('gameResult').style.display = 'none';
-            document.getElementById('gameOptions').style.display = 'grid';
-            const optionsHtml = q.options.map((opt, i) =>
-                `<div class="game-option" onclick="selectAnswer(${i})">${opt}</div>`
-            ).join('');
-            document.getElementById('gameOptions').innerHTML = optionsHtml;
-        }
-
-        function showResult() {
-            const total = questions.length;
-            const avgPercent = Math.round(((player1Score + player2Score) / (total * 2)) * 100);
-            
-            document.getElementById('gameQuestion').innerHTML = `<div style="font-size:1.5em;color:#4a90e2;">测试完成！🎉</div>`;
-            document.getElementById('gameOptions').style.display = 'none';
-            document.getElementById('gameResult').style.display = 'block';
-            
-            document.getElementById('gameScore').innerHTML = `
-                <div style="font-size:0.6em;">最终得分</div>
-                <div style="font-size:1.5em;margin-top:10px;">小苗总 ${player1Score}/${total}题</div>
-                <div style="font-size:1.5em;">Chloe ${player2Score}/${total}题</div>
-                <div style="font-size:2em;color:#4a90e2;margin-top:20px;">${avgPercent}%</div>
-            `;
-
-            let message = '';
-            if (avgPercent === 100) message = '💯 天作之合！心有灵犀一点通！';
-            else if (avgPercent >= 80) message = '💕 超有默契！天生一对！';
-            else if (avgPercent >= 60) message = '✨ 默契还不错，继续增进~';
-            else message = '💭 默契需要时间培养，继续加油！';
-
-            document.getElementById('gameMessage').textContent = message;
         }
 
         function restartGame() {
-            startGame();
+            const options = document.querySelectorAll('.game-option');
+            options.forEach(o => o.classList.remove('wrong', 'correct', 'selected'));
+            document.getElementById('gameQuestion').textContent = '第一次牵手在哪里？ 💕';
+            document.getElementById('gameResult').style.display = 'none';
+            document.getElementById('gameOptions').style.display = 'grid';
         }
 
-        // 旅行地图功能
+        // ===== 旅行地图功能 =====
         const cityPhotos = {
-            '大理': [],
-            '香格里拉': [],
-            '中山': [],
-            '香港': [],
-            '贵阳': [],
-            '合肥': [],
-            '汕头': [],
-            '东澳岛': []
+            '大理': ['images/IMG_dali.jpg'],
+            '香格里拉': ['images/IMG_xianggelila.jpg'],
+            '中山': ['images/IMG_2702.JPG'],
+            '香港': ['images/IMG_3762.JPG'],
+            '贵阳': ['images/IMG_4459.JPG'],
+            '合肥': ['images/IMG_4787.jpg'],
+            '汕头': ['images/IMG_5219.JPG'],
+            '东澳岛': ['images/IMG_3952.JPG']
         };
 
         function showProvincePhotos(element) {
-            const province = element.getAttribute('data-province');
             const cities = element.getAttribute('data-cities').split(',');
             showMapLightbox(cities[0]);
         }
@@ -1457,16 +1510,16 @@
         function showMapLightbox(city) {
             document.getElementById('mapCityTitle').textContent = '📍 ' + city;
             const photosContainer = document.getElementById('mapPhotos');
-            
             const photos = cityPhotos[city] || [];
+
             if (photos.length === 0) {
                 photosContainer.innerHTML = '<p class="no-photos">暂无' + city + '的照片，敬请期待~ 📷</p>';
             } else {
-                photosContainer.innerHTML = photos.map(src => 
+                photosContainer.innerHTML = photos.map(src =>
                     '<div class="map-photo"><img src="' + src + '" alt="' + city + '"></div>'
                 ).join('');
             }
-            
+
             document.getElementById('mapLightbox').classList.add('active');
         }
 
@@ -1474,7 +1527,7 @@
             document.getElementById('mapLightbox').classList.remove('active');
         }
 
-        // 100件小事清单 - 分5类100项
+        // ===== 100件小事清单 =====
         const bucketListData = [
             // 一、日常陪伴（20件）
             { text: "一起赖床，抱着对方睡到自然醒", category: "日常陪伴" },
@@ -1497,7 +1550,7 @@
             { text: "安静依偎，什么话也不说", category: "日常陪伴" },
             { text: "提醒对方按时吃饭、喝水", category: "日常陪伴" },
             { text: "模仿对方的小动作逗乐", category: "日常陪伴" },
-            
+
             // 二、美食烟火（20件）
             { text: "一起逛菜市场、超市挑选食材", category: "美食烟火" },
             { text: "合作做一顿家常饭菜", category: "美食烟火" },
@@ -1519,7 +1572,7 @@
             { text: "打包对方爱吃的食物带回家", category: "美食烟火" },
             { text: "比赛谁吃东西更快、更可爱", category: "美食烟火" },
             { text: "约定每月吃一顿大餐犒劳彼此", category: "美食烟火" },
-            
+
             // 三、约会出行（20件）
             { text: "牵手逛夜市、逛步行街", category: "约会出行" },
             { text: "去公园散步、喂小动物", category: "约会出行" },
@@ -1541,7 +1594,7 @@
             { text: "下雪天一起玩雪、堆雪人", category: "约会出行" },
             { text: "自驾游，沿途走走停停", category: "约会出行" },
             { text: "去古镇慢游，感受烟火气息", category: "约会出行" },
-            
+
             // 四、趣味互动（20件）
             { text: "一起玩桌游、卡牌、拼图", category: "趣味互动" },
             { text: "组队打游戏，并肩作战", category: "趣味互动" },
@@ -1563,95 +1616,89 @@
             { text: "互相化妆、打扮对方", category: "趣味互动" },
             { text: "玩水枪、泡泡机，像小孩一样玩耍", category: "趣味互动" },
             { text: "打赌小游戏，输的人接受小惩罚", category: "趣味互动" },
-            
+
             // 五、仪式感 & 回忆珍藏（20件）
-            { text: "记住彼此的生日、纪念日并用心庆祝", category: "仪式感" },
-            { text: "情人节、七夕准备小礼物和惊喜", category: "仪式感" },
-            { text: "手写情书、小卡片送给对方", category: "仪式感" },
-            { text: "收集电影票、车票、门票做成纪念册", category: "仪式感" },
-            { text: "每年拍一张同款姿势合照", category: "仪式感" },
-            { text: "许下共同的短期、长期小愿望", category: "仪式感" },
-            { text: "一起规划未来的生活和小家", category: "仪式感" },
-            { text: "为对方准备一次惊喜约会", category: "仪式感" },
-            { text: "拥抱很久，认真说一句\"我喜欢你\"", category: "仪式感" },
-            { text: "当众大方牵起对方的手", category: "仪式感" },
-            { text: "包容彼此的小脾气，吵架后主动和解", category: "仪式感" },
-            { text: "认真倾听对方的梦想，给予鼓励", category: "仪式感" },
-            { text: "互换礼物，不求贵重只求用心", category: "仪式感" },
-            { text: "一起许愿，吹生日蜡烛", category: "仪式感" },
-            { text: "翻看旧照片，回忆相识相知的过程", category: "仪式感" },
-            { text: "制定情侣清单，逐项打卡完成", category: "仪式感" },
-            { text: "在彼此低谷时，一直陪伴鼓励", category: "仪式感" },
-            { text: "坦诚说出心里话，加深彼此了解", category: "仪式感" },
-            { text: "陪对方去见各自的朋友、家人", category: "仪式感" },
-            { text: "相伴走过岁岁年年，一直陪伴彼此", category: "仪式感" }
+            { text: "记住彼此的生日、纪念日并用心庆祝", category: "趣味互动" },
+            { text: "情人节、七夕准备小礼物和惊喜", category: "趣味互动" },
+            { text: "手写情书、小卡片送给对方", category: "趣味互动" },
+            { text: "收集电影票、车票、门票做成纪念册", category: "趣味互动" },
+            { text: "每年拍一张同款姿势合照", category: "趣味互动" },
+            { text: "许下共同的短期、长期小愿望", category: "趣味互动" },
+            { text: "一起规划未来的生活和小家", category: "趣味互动" },
+            { text: "为对方准备一次惊喜约会", category: "趣味互动" },
+            { text: "拥抱很久，认真说一句\"我喜欢你\"", category: "趣味互动" },
+            { text: "当众大方牵起对方的手", category: "趣味互动" },
+            { text: "包容彼此的小脾气，吵架后主动和解", category: "趣味互动" },
+            { text: "认真倾听对方的梦想，给予鼓励", category: "趣味互动" },
+            { text: "互换礼物，不求贵重只求用心", category: "趣味互动" },
+            { text: "一起许愿，吹生日蜡烛", category: "趣味互动" },
+            { text: "翻看旧照片，回忆相识相知的过程", category: "趣味互动" },
+            { text: "制定情侣清单，逐项打卡完成", category: "趣味互动" },
+            { text: "在彼此低谷时，一直陪伴鼓励", category: "趣味互动" },
+            { text: "坦诚说出心里话，加深彼此了解", category: "趣味互动" },
+            { text: "陪对方去见各自的朋友、家人", category: "趣味互动" },
+            { text: "相伴走过岁岁年年，一直陪伴彼此", category: "趣味互动" }
         ];
 
-        let completedItems = [];
-        let currentFilter = '全部';
+        // 用 localStorage 记录已完成项
+        let completedItems = JSON.parse(localStorage.getItem('coupleCompletedItems') || '[]');
 
         function initBucketList() {
-            const container = document.getElementById('bucketList');
-            container.innerHTML = '';
-            
-            const filteredList = currentFilter === '全部' 
-                ? bucketListData 
-                : bucketListData.filter(item => item.category === currentFilter);
-            
-            filteredList.forEach((item, index) => {
-                const globalIndex = bucketListData.indexOf(item);
-                const div = document.createElement('div');
-                div.className = 'bucket-item';
-                div.setAttribute('data-index', globalIndex);
-                div.innerHTML = `
-                    <div class="bucket-checkbox"></div>
-                    <div class="bucket-content">
-                        <div class="bucket-text">${item.text}</div>
-                        <div class="bucket-category">${item.category}</div>
-                        <div class="bucket-date"></div>
-                    </div>
-                `;
-                div.onclick = () => toggleBucketItem(div, globalIndex);
-                container.appendChild(div);
-            });
-            
-            updateBucketProgress();
-        }
+            const categories = {
+                '日常陪伴': 'moduleDaily',
+                '美食烟火': 'moduleFood',
+                '约会出行': 'moduleDate',
+                '趣味互动': 'moduleFun'
+            };
 
-        function filterCategory(category, btn) {
-            currentFilter = category;
-            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            initBucketList();
-        }
+            for (const [cat, containerId] of Object.entries(categories)) {
+                const container = document.getElementById(containerId);
+                container.innerHTML = '';
+                const items = bucketListData.filter(item => item.category === cat);
 
-        function toggleBucketItem(element, index) {
-            element.classList.toggle('completed');
-            
-            const dateDiv = element.querySelector('.bucket-date');
-            if (element.classList.contains('completed')) {
-                // 添加完成日期
-                const now = new Date();
-                dateDiv.textContent = `✓ 完成于 ${now.getFullYear()}.${now.getMonth() + 1}.${now.getDate()}`;
-                
-                // 爱心特效
-                showHeartEffect(element);
-            } else {
-                dateDiv.textContent = '';
+                items.forEach((item, localIndex) => {
+                    const globalIndex = bucketListData.indexOf(item);
+                    const isCompleted = completedItems.includes(globalIndex);
+
+                    const row = document.createElement('div');
+                    row.className = 'bucket-item-row' + (isCompleted ? ' completed' : '');
+                    row.innerHTML = `
+                        <div class="item-check">${isCompleted ? '✓' : ''}</div>
+                        <div class="item-text">${item.text}</div>
+                    `;
+                    row.onclick = () => toggleItem(row, globalIndex);
+                    container.appendChild(row);
+                });
             }
-            
+
             updateBucketProgress();
         }
 
-        function showHeartEffect(element) {
-            const rect = element.getBoundingClientRect();
+        function toggleItem(row, index) {
+            const isCompleted = completedItems.includes(index);
+            if (isCompleted) {
+                completedItems = completedItems.filter(i => i !== index);
+                row.classList.remove('completed');
+                row.querySelector('.item-check').textContent = '';
+            } else {
+                completedItems.push(index);
+                row.classList.add('completed');
+                row.querySelector('.item-check').textContent = '✓';
+                showHeartEffect(row);
+            }
+            localStorage.setItem('coupleCompletedItems', JSON.stringify(completedItems));
+            updateBucketProgress();
+        }
+
+        function showHeartEffect(row) {
+            const rect = row.getBoundingClientRect();
             for (let i = 0; i < 5; i++) {
                 const heart = document.createElement('div');
                 heart.textContent = ['💙', '💕', '💗', '🩵'][Math.floor(Math.random() * 4)];
                 heart.style.cssText = `
                     position:fixed;
-                    font-size:20px;
-                    left:${rect.left + rect.width / 2}px;
+                    font-size:18px;
+                    left:${rect.left + rect.width / 2 + (Math.random() - 0.5) * 60}px;
                     top:${rect.top}px;
                     pointer-events:none;
                     z-index:9999;
@@ -1663,34 +1710,34 @@
         }
 
         function updateBucketProgress() {
-            const completed = document.querySelectorAll('.bucket-item.completed').length;
-            const total = currentFilter === '全部' ? 100 : document.querySelectorAll('.bucket-item').length;
-            document.getElementById('completedCount').textContent = completed;
-            document.getElementById('progressFill').style.width = (completed / total * 100) + '%';
+            document.getElementById('completedCount').textContent = completedItems.length;
+            document.getElementById('progressFill').style.width = (completedItems.length / 100 * 100) + '%';
         }
 
-        // 甜蜜留言
+        // ===== 甜蜜留言 =====
         function initSweetNotes() {
             const notes = [
-                "爱你爱你爱你 💙",
-                "最喜欢的事情就是饭后手牵手一起散步 🚶‍♀️🚶",
-                "要一起去好多好多好多地方 ✈️",
-                "永远做你坚强的后盾 💪"
+                "💙 爱你爱你爱你",
+                "🚶‍♀️🚶 最喜欢的事情就是饭后手牵手一起散步",
+                "✈️ 要一起去好多好多好多地方",
+                "💪 永远做你坚强的后盾"
             ];
 
             const container = document.getElementById('sweetNotes');
-            notes.forEach(note => {
+            notes.forEach((note, i) => {
                 const div = document.createElement('div');
                 div.className = 'sweet-note';
                 div.textContent = note;
+                div.style.animationDelay = (i * 0.15) + 's';
                 container.appendChild(div);
             });
         }
 
-        // 初始化
+        // ===== 初始化 =====
         document.addEventListener('DOMContentLoaded', () => {
             updateCountdown();
             createFloatingHearts();
+            createSparkles();
             initGallery();
             initSweetNotes();
             initBucketList();
